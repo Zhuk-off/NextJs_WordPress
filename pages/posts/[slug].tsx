@@ -11,12 +11,17 @@ import SectionSeparator from '../../components/section-separator';
 import Layout from '../../components/layout';
 import PostTitle from '../../components/post-title';
 import Tags from '../../components/tags';
-import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api';
+import {
+    getAllPostsWithSlug,
+    getPostAndMorePosts,
+    getFooterHeaderRestAPIData,
+} from '../../lib/api';
 import { CMS_NAME } from '../../lib/constants';
 
-export default function Post({ post, posts, preview }) {
+export default function Post({ post, posts, preview, dataRest }) {
     const router = useRouter();
     const morePosts = posts?.edges;
+    console.log(dataRest);
 
     if (!router.isFallback && !post?.slug) {
         return <ErrorPage statusCode={404} />;
@@ -73,12 +78,14 @@ export const getStaticProps: GetStaticProps = async ({
     previewData,
 }) => {
     const data = await getPostAndMorePosts(params?.slug, preview, previewData);
+    const dataRest = await getFooterHeaderRestAPIData();
 
     return {
         props: {
             preview,
             post: data.post,
             posts: data.posts,
+            dataRest,
         },
         revalidate: 10,
     };
