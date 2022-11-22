@@ -1,4 +1,6 @@
-import { CMS_NAME, CMS_URL } from '../lib/constants'
+import { useContext } from 'react';
+import { HeaderFooterContext } from '../context/headerFooterContext';
+import { CMS_NAME, CMS_URL } from '../lib/constants';
 
 export default function Intro() {
   return (
@@ -24,5 +26,5 @@ export default function Intro() {
         .
       </h4>
     </section>
-  )
+  );
 }

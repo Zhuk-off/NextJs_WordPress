@@ -1,7 +1,12 @@
-import Container from './container'
-import { EXAMPLE_PATH } from '../lib/constants'
+import Container from './container';
+import { EXAMPLE_PATH } from '../lib/constants';
+import { useContext } from 'react';
+import { HeaderFooterContext } from '../context/headerFooterContext';
 
 export default function Footer() {
+  const { data } = useContext(HeaderFooterContext);
+  const footer = data.footer;
+  console.log('Footer Menu - ', footer);
   return (
     <footer className="bg-accent-1 border-t border-accent-2">
       <Container>
@@ -26,5 +31,5 @@ export default function Footer() {
         </div>
       </Container>
     </footer>
-  )
+  );
 }
