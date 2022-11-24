@@ -13,13 +13,15 @@ export default function Index({ allPosts: { edges }, preview, dataRest }) {
   const heroPost = edges[0]?.node;
   const morePosts = edges.slice(1);
   const { data } = dataRest;
+  const {siteTitle,favicon} = data.header;
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
       <>
         <Layout preview={preview}>
           <Head>
-            <title>Next.js Blog Example with {CMS_NAME}</title>
+            <title>{siteTitle || `Next.js Blog Example with ${CMS_NAME}`}</title>
+            <link rel="shortcut icon" href={favicon || "/favicon.ico"} type="image/x-icon" />
           </Head>
           <Container>
             <Intro />
