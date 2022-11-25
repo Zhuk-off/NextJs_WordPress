@@ -6,7 +6,7 @@ import { HeaderFooterContext } from '../context/headerFooterContext';
 export default function Footer() {
   const { data } = useContext(HeaderFooterContext);
   const { footer } = data;
-  console.log('Footer Menu - ', footer);
+  // console.log('Footer Menu - ', footer);
   return (
     <footer className="bg-accent-1 border-t border-accent-2">
       <Container>

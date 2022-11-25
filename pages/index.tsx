@@ -8,20 +8,28 @@ import Layout from '../components/layout';
 import { getAllPostsForHome, getFooterHeaderRestAPIData } from '../lib/api';
 import { CMS_NAME } from '../lib/constants';
 import { HeaderFooterContext } from '../context/headerFooterContext';
+import { modifyUrlBackendToFrontend } from '../lib/helpers';
 
 export default function Index({ allPosts: { edges }, preview, dataRest }) {
   const heroPost = edges[0]?.node;
   const morePosts = edges.slice(1);
   const { data } = dataRest;
-  const {siteTitle,favicon} = data.header;
+  const { siteTitle, favicon } = data.header;
+  // console.log('dataRest',dataRest);
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
       <>
         <Layout preview={preview}>
           <Head>
-            <title>{siteTitle || `Next.js Blog Example with ${CMS_NAME}`}</title>
-            <link rel="shortcut icon" href={favicon || "/favicon.ico"} type="image/x-icon" />
+            <title>
+              {siteTitle || `Next.js Blog Example with ${CMS_NAME}`}
+            </title>
+            <link
+              rel="shortcut icon"
+              href={favicon || '/favicon.ico'}
+              type="image/x-icon"
+            />
           </Head>
           <Container>
             <Intro />
@@ -42,8 +50,6 @@ export default function Index({ allPosts: { edges }, preview, dataRest }) {
     </HeaderFooterContext.Provider>
   );
 }
-
-// export default headerFooterLayoutData(Index);
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview);
