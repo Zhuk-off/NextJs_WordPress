@@ -2,10 +2,11 @@ if (!process.env.WORDPRESS_API_URL) {
     throw new Error(`
     Please provide a valid WordPress instance URL.
     Add to your environment variables WORDPRESS_API_URL.
-  `);
+    `);
 }
 
 /** @type {import('next').NextConfig} */
+const path = require('path')
 module.exports = {
     images: {
         domains: [
@@ -16,4 +17,16 @@ module.exports = {
             'secure.gravatar.com',
         ],
     },
+    trailingSlash: false,
+	webpackDevMiddleware: config => {
+		config.watchOptions = {
+			poll: 1000,
+			aggregateTimeout: 300
+		}
+
+		return config
+	},
+	sassOptions: {
+		includePaths: [path.join(__dirname, 'styles')]
+	}
 };
