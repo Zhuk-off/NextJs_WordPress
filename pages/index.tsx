@@ -8,7 +8,7 @@ import Layout from '../components/layout';
 import { getAllPostsForHome, getFooterHeaderRestAPIData } from '../lib/api';
 import { CMS_NAME } from '../lib/constants';
 import { HeaderFooterContext } from '../context/headerFooterContext';
-import { modifyUrlBackendToFrontend } from '../lib/helpers';
+import {Glia} from '../components/icons'
 
 export default function Index({ allPosts: { edges }, preview, dataRest }) {
   const heroPost = edges[0]?.node;
@@ -16,7 +16,7 @@ export default function Index({ allPosts: { edges }, preview, dataRest }) {
   const { data } = dataRest;
   const { siteTitle, favicon } = data.header;
   // console.log('dataRest',dataRest);
-
+ 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
       <>
@@ -43,6 +43,7 @@ export default function Index({ allPosts: { edges }, preview, dataRest }) {
                 excerpt={heroPost.excerpt}
               />
             )}
+            <Glia/>
             {morePosts.length > 0 && <MoreStories posts={morePosts} />}
           </Container>
         </Layout>

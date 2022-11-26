@@ -11,16 +11,19 @@ export default function Header() {
 
   return (
     <>
-      <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8">
+      <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
         <Link href="/" className="hover:underline">
           Blog
         </Link>
         .
       </h2>
-      <ul >
+      <ul className="mb-3 flex bg-[#c5c5c5] p-2 font-bold uppercase tracking-wide transition-all delay-300 duration-300 ease-in-out ">
         {headerMenuItems.length
           ? headerMenuItems.map((menuItem) => (
-              <li key={menuItem?.ID}>
+              <li
+                key={menuItem?.ID}
+                className="px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
+              >
                 <Link
                   href={menuItem?.url || '/'}
                   dangerouslySetInnerHTML={{ __html: menuItem.title }}
