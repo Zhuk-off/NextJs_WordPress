@@ -17,21 +17,21 @@ export default function Header() {
         </Link>
         .
       </h2>
-      <ul className="mb-3 flex bg-[#c5c5c5] p-2 font-bold uppercase tracking-wide transition-all delay-300 duration-300 ease-in-out ">
-        {headerMenuItems.length
-          ? headerMenuItems.map((menuItem) => (
-              <li
-                key={menuItem?.ID}
-                className="px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
-              >
-                <Link
-                  href={menuItem?.url || '/'}
-                  dangerouslySetInnerHTML={{ __html: menuItem.title }}
-                />
-              </li>
-            ))
-          : null}
-      </ul>
+      {headerMenuItems && headerMenuItems.length ? (
+        <ul className="mb-3 flex flex-wrap bg-[#c5c5c5] p-2 font-bold uppercase tracking-wide transition-all delay-300 duration-300 ease-in-out ">
+          {headerMenuItems.map((menuItem) => (
+            <li
+              key={menuItem?.ID}
+              className="px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
+            >
+              <Link
+                href={menuItem?.url || '/'}
+                dangerouslySetInnerHTML={{ __html: menuItem.title }}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </>
   );
 }
