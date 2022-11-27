@@ -6,7 +6,7 @@ import { FRONTEND_SITE_URL } from './constants';
  * The default WordPress tools don't work.
  * When creating a post, an error occurs in WordPress. */
 
-export const modifyUrlBackendToFrontend = (data: object) => {
+export const modifyUrlBackendToFrontend = (data: object): object => {
   modifyUrl(data);
 
   function modifyUrl(data: object) {
@@ -23,7 +23,36 @@ export const modifyUrlBackendToFrontend = (data: object) => {
                 process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
                 FRONTEND_SITE_URL
               );
-              console.log('element replace', elementReplaced);
+              data[key] = elementReplaced;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return data;
+};
+
+export const modifyUrlBackendToFrontendWC = (data: object[]): object[] => {
+  data.forEach((elem) => {
+    modifyUrlWCResponse(elem);
+  });
+
+  function modifyUrlWCResponse(data: object) {
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const element = data[key];
+        if (typeof element === 'object') {
+          modifyUrlWCResponse(element);
+        } else {
+          let result = key.match(/^permalink$/) || key.match(/^href$/);
+          if (result) {
+            if (typeof element === 'string') {
+              const elementReplaced = element.replace(
+                process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
+                FRONTEND_SITE_URL
+              );
               data[key] = elementReplaced;
             }
           }
