@@ -1,8 +1,6 @@
-import Img from 'next/image';
-
-import PropTypes from 'prop-types';
+import Img, { ImageProps } from 'next/image';
 import cx from 'classnames';
-import { DEFAULT_IMG_URL } from '../../lib/constants';
+import { DEFAULT_IMG_URL } from '../lib/constants';
 
 /**
  * Image Component.
@@ -15,13 +13,22 @@ import { DEFAULT_IMG_URL } from '../../lib/constants';
  * @return {jsx}
  */
 
-const Image = (props) => {
+interface Props extends ImageProps {
+  title: string;
+  className?: string;
+  layout?: string;
+  objectFit?: string;
+  containerClassNames?: string;
+  showDefault?: string;
+}
+
+const ImageMod = (props: Props) => {
   const {
-    altText,
+    alt,
     title,
     width,
     height,
-    sourceUrl,
+    src,
     className,
     layout,
     objectFit,
@@ -30,7 +37,7 @@ const Image = (props) => {
     ...rest
   } = props;
 
-  if (!sourceUrl && !showDefault) {
+  if (!src && !showDefault) {
     return null;
   }
 
@@ -40,15 +47,16 @@ const Image = (props) => {
    * That's we need to wrap our image in a container and give it a height and width.
    * Notice that in this case, the given height and width is being used for container and not img.
    */
+
   if ('fill' === layout) {
     const attributes = {
-      alt: altText || title,
-      src: sourceUrl || (showDefault ? DEFAULT_IMG_URL : ''),
+      alt: alt || title,
+      src: src || (showDefault ? DEFAULT_IMG_URL : ''),
       layout: 'fill',
-      className: cx('object-cover', className),
+      showDefault: true,
+      className: cx('object-cover', 'product__image', className),
       ...rest,
     };
-
     return (
       <div className={cx('relative', containerClassNames)}>
         <Img {...attributes} />
@@ -56,34 +64,16 @@ const Image = (props) => {
     );
   } else {
     const attributes = {
-      alt: altText || title,
-      src: sourceUrl || (showDefault ? DEFAULT_IMG_URL : ''),
-      width: width || 'auto',
-      height: height || 'auto',
-      className,
+      alt: alt || title,
+      src: src || (showDefault ? DEFAULT_IMG_URL : ''),
+      width: width,
+      height: height,
+      showDefault: true,
+      className: cx('product__image', className),
       ...rest,
     };
     return <Img {...attributes} />;
   }
 };
 
-Image.propTypes = {
-  altText: PropTypes.string,
-  title: PropTypes.string,
-  sourceUrl: PropTypes.string,
-  layout: PropTypes.string,
-  showDefault: PropTypes.bool,
-  containerClassName: PropTypes.string,
-  className: PropTypes.string,
-};
-
-Image.defaultProps = {
-  altText: '',
-  title: '',
-  sourceUrl: '',
-  showDefault: true,
-  containerClassNames: '',
-  className: 'product__image',
-};
-
-export default Image;
+export default ImageMod;

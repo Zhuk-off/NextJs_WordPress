@@ -11,18 +11,25 @@ import { HeaderFooterContext } from '../context/headerFooterContext';
 import { Glia } from '../components/icons';
 import Products from '../components/products';
 import axios from 'axios';
+import { IProduct } from '../interfaces/products.interface';
+import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
 
 export default function Index({
   allPosts: { edges },
   preview,
   dataRest,
   products,
+}: {
+  allPosts: any;
+  preview: any;
+  dataRest: IHeaderFooterContext;
+  products: IProduct[];
 }) {
   const heroPost = edges[0]?.node;
   const morePosts = edges.slice(1);
   const { data } = dataRest;
   const { siteTitle, favicon } = data.header;
-  // console.log('products', products);
+  console.log('products', products);
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
