@@ -17,9 +17,9 @@ export default function Footer() {
     sidebarTwo,
     socialLinks,
   } = footer || {};
-  console.log('Footer Menu - ', footer);
+  // console.log('Footer Menu - ', footer);
   // console.log(footerMenuItems.length);
-  console.log(footerMenuItems);
+  // console.log(footerMenuItems);
 
   return (
     <footer className="border-t border-accent-2 bg-accent-1">
