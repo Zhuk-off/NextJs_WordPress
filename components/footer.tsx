@@ -1,10 +1,9 @@
 import Container from './container';
-import { EXAMPLE_PATH } from '../lib/constants';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { HeaderFooterContext } from '../context/headerFooterContext';
 import { sanitize } from '../utils/miscellaneous';
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Youtube } from './icons';
+
 import { getIconComponentByName } from '../lib/helpers';
 
 export default function Footer() {
@@ -21,6 +20,12 @@ export default function Footer() {
   // console.log(footerMenuItems.length);
   // console.log(footerMenuItems);
 
+  const [isMounted, setMount] = useState(false);
+
+  useEffect(() => {
+    setMount(true);
+  }, []);
+
   return (
     <footer className="border-t border-accent-2 bg-accent-1">
       <Container>
@@ -29,15 +34,23 @@ export default function Footer() {
             Statically Generated with Next.js.
           </h3>
 
-          {/* Widget one */}
-          <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
-            <div dangerouslySetInnerHTML={{ __html: sanitize(sidebarOne) }} />
-          </div>
+          {isMounted ? (
+            <>
+              {/* Widget one */}
+              <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
+                <div
+                  dangerouslySetInnerHTML={{ __html: sanitize(sidebarOne) }}
+                />
+              </div>
 
-          {/* Widget two */}
-          <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
-            <div dangerouslySetInnerHTML={{ __html: sanitize(sidebarTwo) }} />
-          </div>
+              {/* Widget two */}
+              <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
+                <div
+                  dangerouslySetInnerHTML={{ __html: sanitize(sidebarTwo) }}
+                />
+              </div>
+            </>
+          ) : null}
 
           {/* Footer Menus */}
           <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">

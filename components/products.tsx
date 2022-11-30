@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { IProduct } from '../interfaces/products.interface';
+import { sanitize } from '../utils/miscellaneous';
 import ImageMod from './image';
 
 const Products = ({ products }: { products: IProduct[] }) => {
@@ -25,7 +26,8 @@ const Products = ({ products }: { products: IProduct[] }) => {
                 width={380}
                 height={380}
               />
-              <h3>{product?.name ?? ''}</h3>
+              <h3 className='font-bold uppercase'>{product?.name ?? ''}</h3>
+              <div dangerouslySetInnerHTML={{__html: sanitize(product?.price_html ?? '')}}/>
             </Link>
           </div>
         );
