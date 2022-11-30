@@ -18,7 +18,7 @@ module.exports = {
             'via.placeholder.com',
         ],
     },
-    trailingSlash: false,
+    trailingSlash: true,
 	// webpackDevMiddleware: config => {
 	// 	config.watchOptions = {
 	// 		poll: 1000,

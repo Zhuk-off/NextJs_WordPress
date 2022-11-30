@@ -13,13 +13,14 @@ import { DEFAULT_IMG_URL } from '../lib/constants';
  * @return {jsx}
  */
 
+
 interface Props extends ImageProps {
   title: string;
   className?: string;
   layout?: string;
   objectFit?: string;
   containerClassNames?: string;
-  showDefault?: string;
+  showdefault?: boolean;
 }
 
 const ImageMod = (props: Props) => {
@@ -33,11 +34,11 @@ const ImageMod = (props: Props) => {
     layout,
     objectFit,
     containerClassNames,
-    showDefault,
+    showdefault,
     ...rest
   } = props;
 
-  if (!src && !showDefault) {
+  if (!src && !showdefault) {
     return null;
   }
 
@@ -51,9 +52,9 @@ const ImageMod = (props: Props) => {
   if ('fill' === layout) {
     const attributes = {
       alt: alt || title,
-      src: src || (showDefault ? DEFAULT_IMG_URL : ''),
+      src: src || (showdefault ? DEFAULT_IMG_URL : ''),
       layout: 'fill',
-      showDefault: true,
+      showdefault: true.toString(),
       className: cx('object-cover', 'product__image', className),
       ...rest,
     };
@@ -65,10 +66,10 @@ const ImageMod = (props: Props) => {
   } else {
     const attributes = {
       alt: alt || title,
-      src: src || (showDefault ? DEFAULT_IMG_URL : ''),
+      src: src || (showdefault ? DEFAULT_IMG_URL : ''),
       width: width,
       height: height,
-      showDefault: true,
+      showdefault: true.toString(),
       className: cx('product__image', className),
       ...rest,
     };
