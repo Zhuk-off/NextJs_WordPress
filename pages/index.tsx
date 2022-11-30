@@ -10,9 +10,9 @@ import { CMS_NAME, GET_PRODUCT_ENDPOINT } from '../lib/constants';
 import { HeaderFooterContext } from '../context/headerFooterContext';
 import { Glia } from '../components/icons';
 import Products from '../components/products';
-import axios from 'axios';
 import { IProduct } from '../interfaces/products.interface';
 import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
+import { getProductsData } from '../utils/products';
 
 export default function Index({
   allPosts: { edges },
@@ -29,7 +29,7 @@ export default function Index({
   const morePosts = edges.slice(1);
   const { data } = dataRest;
   const { siteTitle, favicon } = data.header;
-  console.log('products', products);
+  // console.log('products', products);
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
@@ -70,10 +70,10 @@ export default function Index({
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview);
   const dataRest = await getFooterHeaderRestAPIData();
-  const { data: products } = await axios.get(GET_PRODUCT_ENDPOINT);
+  const products = await getProductsData();
 
   return {
-    props: { allPosts, preview, dataRest, products: products?.products ?? {} },
+    props: { allPosts, preview, dataRest, products: products ?? {} },
     revalidate: 10,
   };
 };

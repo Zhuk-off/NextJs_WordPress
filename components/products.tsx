@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { IProduct } from '../interfaces/products.interface';
 import { sanitize } from '../utils/miscellaneous';
@@ -11,7 +10,7 @@ const Products = ({ products }: { products: IProduct[] }) => {
 
   return (
     <div className="-mx-2 flex flex-wrap overflow-hidden">
-      {products.map((product) => {
+      {products.length ? products.map((product) => {
         const img = product?.images?.[0];
         return (
           <div
@@ -31,7 +30,7 @@ const Products = ({ products }: { products: IProduct[] }) => {
             </Link>
           </div>
         );
-      })}
+      }):null}
     </div>
   );
 };
