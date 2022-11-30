@@ -20,9 +20,13 @@ import { CMS_NAME } from '../../lib/constants';
 import { HeaderFooterContext } from '../../context/headerFooterContext';
 
 export default function Post({ post, posts, preview, dataRest }) {
+  if (!dataRest) return null
   const router = useRouter();
   const morePosts = posts?.edges;
-  const {data} = dataRest
+  if (!dataRest) {
+    console.log('не существует');
+  }
+  const { data } = dataRest;
 
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -91,6 +95,10 @@ export const getStaticProps: GetStaticProps = async ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts = await getAllPostsWithSlug();
+  console.log(
+    '------------------------!!!!!!!!!!!!!---------------',
+    allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || []
+  );
 
   return {
     paths: allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || [],
