@@ -86,7 +86,6 @@ export const getIconComponentByName = (
     const IconComponent = ComponentsMap[name];
     return <IconComponent width={width} heigth={heigth} />;
   } else {
-    console.log('no find');
     return null;
   }
 };

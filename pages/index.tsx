@@ -9,7 +9,7 @@ import { getAllPostsForHome, getFooterHeaderRestAPIData } from '../lib/api';
 import { CMS_NAME, GET_PRODUCT_ENDPOINT } from '../lib/constants';
 import { HeaderFooterContext } from '../context/headerFooterContext';
 import { Glia } from '../components/icons';
-import Products from '../components/products';
+import Products from '../components/products/products';
 import { IProduct } from '../interfaces/products.interface';
 import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
 import { getProductsData } from '../utils/products';
