@@ -8,12 +8,23 @@ import { getSession, storeSession } from './session';
  *
  * @param {int} productId Product Id.
  * @param {int} qty Product Quantity.
+ * @param {Function} setCart
+ * @param {Function} setIsAddedToCart
+ * @param {Function} setLoading
  *
  */
 
-export const addToCart = (productId, qty = 1) => {
+export const addToCart = (
+  productId,
+  qty = 1,
+  setCart,
+  setIsAddedToCart,
+  setLoading
+) => {
   const storedSession = getSession();
   const addOrViewCartConfig = getApiCartConfig();
+
+  setLoading(true);
 
   axios
     .post(
@@ -32,8 +43,28 @@ export const addToCart = (productId, qty = 1) => {
       ) {
         storeSession(res?.headers?.['x-wc-session']);
       }
+      setIsAddedToCart(true);
+      setLoading(false);
+      viewCart(setCart);
+    })
+    .catch((err) => {
+      setLoading(false);
+      console.log('err', err);
+    });
+};
 
-      viewCart();
+/**
+ * View Cart Request Handler
+ * тут мы хотим посчитать общую сумму корзины
+ */
+export const viewCart = (setCart) => {
+  const addOrViewCartConfig = getApiCartConfig();
+
+  axios
+    .get(CART_ENDPOINT, addOrViewCartConfig)
+    .then((res) => {
+      const formattedCartData = getFormattedCartData(res?.data ?? []);
+      setCart(formattedCartData);
     })
     .catch((err) => {
       console.log('err', err);
@@ -41,17 +72,46 @@ export const addToCart = (productId, qty = 1) => {
 };
 
 /**
- * View Cart Request Handler
+ * Calculate Cart Qty And Price
+ *
+ * @param cartItems
+ * @return {{totalQty: number, totalPrice: number}}
  */
-export const viewCart = () => {
-  const addOrViewCartConfig = getApiCartConfig();
 
-  axios
-    .get(CART_ENDPOINT, addOrViewCartConfig)
-    .then((res) => {
-      console.log('res', res);
-    })
-    .catch((err) => {
-      console.log('err', err);
-    });
+// cartItems - массив элементов корзины
+const calculateCartQtyAndPrice = (cartItems) => {
+  const qtyAndPrice = {
+    totalQty: 0,
+    totalPrice: 0,
+  };
+
+  if (!Array.isArray(cartItems) || !cartItems.length) {
+    return qtyAndPrice;
+  }
+
+  // пробегаем по всем элементам корзины и считаем все количество и всю сумму
+  cartItems.forEach((item, index) => {
+    qtyAndPrice.totalQty += item?.quantity ?? 0;
+    qtyAndPrice.totalPrice += item?.line_total ?? 0;
+  });
+
+  return qtyAndPrice;
+};
+
+// Возвращает нам объект товаров в корзине, дополненный общим количеством и суммой
+/**
+ * Get Formatted Cart Data.
+ *
+ * @param cartData
+ * @return {null|{cartTotal: {totalQty: number, totalPrice: number}, cartItems: ({length}|*|*[])}}
+ */
+const getFormattedCartData = (cartData) => {
+  if (!cartData || !cartData.length) {
+    return null;
+  }
+  const cartTotal = calculateCartQtyAndPrice(cartData || []);
+  return {
+    cartItems: cartData || [],
+    ...cartTotal,
+  };
 };

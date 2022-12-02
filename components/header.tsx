@@ -5,7 +5,6 @@ import { HeaderFooterContext } from '../context/headerFooterContext';
 export default function Header() {
   const { data } = useContext(HeaderFooterContext);
   const { header } = data;
-  // console.log('Header Menu - ', header);
   const { headerMenuItems, siteDescription, siteTitle, siteLogoUrl, favicon } =
     header || {};
 
