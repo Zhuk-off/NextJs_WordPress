@@ -20,7 +20,7 @@ import { CMS_NAME } from '../../lib/constants';
 import { HeaderFooterContext } from '../../context/headerFooterContext';
 
 export default function Post({ post, posts, preview, dataRest }) {
-  if (!dataRest) return null
+  if (!dataRest) return null;
   const router = useRouter();
   const morePosts = posts?.edges;
   const { data } = dataRest;
@@ -33,7 +33,6 @@ export default function Post({ post, posts, preview, dataRest }) {
     <HeaderFooterContext.Provider value={{ data }}>
       <Layout preview={preview}>
         <Container>
-          <Header />
           {router.isFallback ? (
             <PostTitle>Loading…</PostTitle>
           ) : (

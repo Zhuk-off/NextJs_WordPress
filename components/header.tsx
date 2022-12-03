@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useContext } from 'react';
 import { HeaderFooterContext } from '../context/headerFooterContext';
+import { Bag, User, Wishlist } from './icons';
 
 export default function Header() {
   const { data } = useContext(HeaderFooterContext);
@@ -16,21 +17,39 @@ export default function Header() {
         </Link>
         .
       </h2>
-      {headerMenuItems && headerMenuItems.length ? (
-        <ul className="mb-3 flex flex-wrap bg-[#c5c5c5] p-2 font-bold uppercase tracking-wide transition-all delay-300 duration-300 ease-in-out ">
-          {headerMenuItems.map((menuItem) => (
-            <li
-              key={menuItem?.ID}
-              className="px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
-            >
-              <Link
-                href={menuItem?.url || '/'}
-                dangerouslySetInnerHTML={{ __html: menuItem.title }}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <div className="flex justify-between">
+        {headerMenuItems && headerMenuItems.length ? (
+          <ul className="flex flex-wrap font-bold uppercase leading-10 tracking-wide transition-all delay-300 duration-300 ease-in-out ">
+            {headerMenuItems.map((menuItem) => (
+              <li
+                key={menuItem?.ID}
+                className="px-3 transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
+              >
+                <Link
+                  href={menuItem?.url || '/'}
+                  dangerouslySetInnerHTML={{ __html: menuItem.title }}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="flex">
+          <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+            <User />
+            User
+          </div>
+          <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+            <Wishlist />
+            Wishlist
+          </div>
+          <Link href={'/cart'}>
+            <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+              <Bag />
+              Cart
+            </div>
+          </Link>
+        </div>
+      </div>
     </>
   );
 }
