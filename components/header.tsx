@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import { useContext } from 'react';
+import { CartContext } from '../context/CartCounter';
 import { HeaderFooterContext } from '../context/headerFooterContext';
 import { Bag, User, Wishlist } from './icons';
 
 export default function Header() {
   const { data } = useContext(HeaderFooterContext);
+  const [cart, setCart] = useContext(CartContext);
+
   const { header } = data;
   const { headerMenuItems, siteDescription, siteTitle, siteLogoUrl, favicon } =
     header || {};
@@ -44,8 +47,10 @@ export default function Header() {
           </div>
           <Link href={'/cart'}>
             <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
-              <Bag />
-              Cart
+              <Bag className="mr-1 lg:mr-0" />
+              <span className="ml-1">
+                Bag{cart?.totalQty ? `(${cart?.totalQty})` : null}
+              </span>
             </div>
           </Link>
         </div>

@@ -45,6 +45,7 @@ export default function Index({
             />
           </Head>
           <Container>
+            <Products products={products} />
             <Intro />
             {heroPost && (
               <HeroPost
@@ -56,7 +57,6 @@ export default function Index({
                 excerpt={heroPost.excerpt}
               />
             )}
-            <Products products={products} />
             <Glia />
             {morePosts.length > 0 && <MoreStories posts={morePosts} />}
           </Container>
