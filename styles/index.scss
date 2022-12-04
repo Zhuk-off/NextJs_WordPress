@@ -14,7 +14,6 @@
 
 /* Your own custom utilities */
 
-@import '../fonts/fonts.scss';
 
 .has-text-align-left {
   @apply text-left;
@@ -34,7 +33,7 @@
 
 .alignfull {
   @apply relative w-screen;
-
+  
   left: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
@@ -63,7 +62,7 @@
 .wp-block-image .aligncenter > figcaption,
 .wp-block-image.is-resized > figcaption {
   @apply table-caption;
-
+  
   caption-side: bottom;
 }
 
@@ -93,7 +92,7 @@
 
 .wp-block-cover {
   @apply flex flex-wrap items-center justify-center overflow-hidden bg-cover bg-center;
-
+  
   min-height: 430px;
 }
 
@@ -104,3 +103,9 @@
 .wp-block-media-text {
   @apply grid grid-cols-2 gap-4;
 }
+
+@import '../fonts/fonts.scss';
+
+// @import '01-settings/typography';
+// @import '02-components/elements/list';
+// @import '02-components/layout/footer';
