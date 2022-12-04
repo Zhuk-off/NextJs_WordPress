@@ -31,6 +31,44 @@ module.exports = {
       lineHeight: {
         tight: 1.2,
       },
+      fontFamily: {
+        lato: ['Lato', 'Helvetica', 'Verdana', 'Tahoma', 'sans-serif'],
+        'lato-italic': [
+          'Lato Italic',
+          'Helvetica',
+          'Verdana',
+          'Tahoma',
+          'sans-serif',
+        ],
+        'lato-bold': [
+          'Lato Bold',
+          'Helvetica',
+          'Verdana',
+          'Tahoma',
+          'sans-serif',
+        ],
+        'lato-bold-italic': [
+          'Lato Bold Italic',
+          'Helvetica',
+          'Verdana',
+          'Tahoma',
+          'sans-serif',
+        ],
+        'lato-heavy': [
+          'Lato Heavy',
+          'Helvetica',
+          'Verdana',
+          'Tahoma',
+          'sans-serif',
+        ],
+        'lato-heavy-italic': [
+          'Lato Heavy Italic',
+          'Helvetica',
+          'Verdana',
+          'Tahoma',
+          'sans-serif',
+        ],
+      },
       fontSize: {
         '5xl': '2.5rem',
         '6xl': '2.75rem',
