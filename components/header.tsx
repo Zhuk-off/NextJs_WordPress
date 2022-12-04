@@ -6,7 +6,7 @@ import { Bag, User, Wishlist } from './icons';
 
 export default function Header() {
   const { data } = useContext(HeaderFooterContext);
-  const [cart, setCart] = useContext(CartContext);
+  const [cart, setCart]= useContext(CartContext);
 
   const { header } = data;
   const { headerMenuItems, siteDescription, siteTitle, siteLogoUrl, favicon } =

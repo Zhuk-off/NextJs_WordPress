@@ -1,6 +1,12 @@
-import  { useState, useEffect,createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
+import { ICart } from '../interfaces/cart.interface';
 
-export const CartContext = createContext([{}, () => {}]);
+const context: [ICart, (cart: ICart) => void] = [
+  { cartItems: [], totalPrice: 0, totalQty: 0 },
+  (): void => {},
+];
+
+export const CartContext = createContext(context);
 
 export const CartCountProvider = (props) => {
   const [cart, setCart] = useState(null);

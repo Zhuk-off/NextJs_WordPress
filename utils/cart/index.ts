@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ICart, ICartItem } from '../../interfaces/cart.interface';
 import { CART_ENDPOINT } from '../../lib/constants';
 import { getApiCartConfig } from './api';
 import { getSession, storeSession } from './session';
@@ -79,7 +80,7 @@ export const viewCart = (setCart) => {
  */
 
 // cartItems - массив элементов корзины
-const calculateCartQtyAndPrice = (cartItems) => {
+const calculateCartQtyAndPrice = (cartItems:ICartItem[]) => {
   const qtyAndPrice = {
     totalQty: 0,
     totalPrice: 0,
@@ -105,7 +106,7 @@ const calculateCartQtyAndPrice = (cartItems) => {
  * @param cartData
  * @return {null|{cartTotal: {totalQty: number, totalPrice: number}, cartItems: ({length}|*|*[])}}
  */
-const getFormattedCartData = (cartData) => {
+const getFormattedCartData = (cartData:ICartItem[]):ICart => {
   if (!cartData || !cartData.length) {
     return null;
   }
