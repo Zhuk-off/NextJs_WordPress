@@ -13,7 +13,7 @@ const Cart = ({ post, posts, preview, dataRest }) => {
     <HeaderFooterContext.Provider value={{ data }}>
       <Layout preview={preview}>
         <Container>
-          <h1 className="uppercase tracking-0.5px">Cart</h1>
+          <h1 className="uppercase tracking-0.5px">Товары, что вы добавили в корзину</h1>
           <CartItemsContainer/>
         </Container>
       </Layout>

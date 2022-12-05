@@ -33,7 +33,6 @@ const CartItem = ({
    */
   const isMounted = useRef(false);
   console.log(isMounted);
-  
 
   useEffect(() => {
     isMounted.current = true;
@@ -109,6 +108,8 @@ const CartItem = ({
     }
   };
 
+  const currency = item?.currency === 'Br' ? 'руб.' : '';
+
   return (
     <div className="cart-item-wrap mb-5 grid grid-cols-3 gap-6 border border-brand-bright-grey p-5">
       <div className="cart-left-col col-span-1">
@@ -125,29 +126,39 @@ const CartItem = ({
       <div className="cart-right-col col-span-2">
         <div className="flex h-full flex-col justify-between">
           <div className="cart-product-title-wrap relative">
-            <h3 className="cart-product-title text-brand-orange">
-              {item?.data?.name}
-            </h3>
-            {item?.data?.description ? <p>{item?.data?.description}</p> : ''}
+            <div className="mr-14">
+              <h3 className="cart-product-title text-brand-orange">
+                {item?.data?.name}
+              </h3>
+              {item?.data?.description ? <p>{item?.data?.description}</p> : ''}
+            </div>
             <button
-              className="cart-remove-item absolute right-0 top-0 flex items-center border border-brand-bright-grey bg-transparent px-4 py-2 text-22px leading-22px"
+              className="cart-remove-item absolute right-0 top-0 
+              flex items-center 
+              border border-brand-bright-grey bg-transparent px-4 py-2 text-22px leading-22px "
               onClick={(event) => handleRemoveProductClick(event, item?.key)}
             >
-              &times;
+              <span className="-translate-y-0.5">&times;</span>
             </button>
           </div>
 
-          <footer className="cart-product-footer flex justify-between border-t border-brand-bright-grey p-4">
+          <footer className="cart-product-footer flex items-center justify-between border-t border-brand-bright-grey p-4">
             <div className="">
-              <span className="cart-total-price">
-                {item?.currency}
-                {item?.line_subtotal}
-              </span>
+              <div className="cart-total-price">
+                {`Количество: ${item?.quantity} шт `}
+              </div>
+              <div className="cart-total-price">
+                {`Общая стоимость:`}{' '}
+                <span className="font-semibold">{`${item?.line_subtotal.toFixed(
+                  2
+                )} ${currency}`}</span>
+              </div>
             </div>
             {updatingProductProcess ? (
               <img
                 className="woo-next-cart-item-spinner"
-                width="24"
+                width={40}
+                height={40}
                 src="/cart-spinner.gif"
                 alt="spinner"
               />

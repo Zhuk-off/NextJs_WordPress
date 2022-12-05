@@ -4,7 +4,7 @@ const SvgWishlist = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={18}
+    width={25}
     height="100%"
     stroke="currentColor"
     {...props}

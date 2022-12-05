@@ -32,7 +32,7 @@ export const AddToCart = ({ product }: { product: IProduct }) => {
         }
         disabled={loading}
       >
-        {loading ? 'Adding...' : 'Add to cart'}
+        {loading ? 'Добавляется...' : 'Купить'}
       </button>
 
       {isAddedToCart && !loading ? (
@@ -40,7 +40,7 @@ export const AddToCart = ({ product }: { product: IProduct }) => {
           href={'/cart'}
           className="ml-4 rounded border border-gray-400 bg-white py-2 px-4 font-semibold text-gray-800 shadow hover:bg-gray-100"
         >
-          View cart
+          Оформить
         </Link>
       ) : null}
     </div>
