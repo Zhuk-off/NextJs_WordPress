@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Dispatch, SetStateAction } from 'react';
 import { ICart, ICartItem } from '../../interfaces/cart.interface';
 import { CART_ENDPOINT } from '../../lib/constants';
 import { getApiCartConfig } from './api';
@@ -16,11 +17,11 @@ import { getSession, storeSession } from './session';
  */
 
 export const addToCart = (
-  productId,
-  qty = 1,
-  setCart,
-  setIsAddedToCart,
-  setLoading
+  productId: number,
+  qty: number = 1,
+  setCart: (cart: ICart) => void,
+  setIsAddedToCart: Dispatch<SetStateAction<boolean>>,
+  setLoading: Dispatch<SetStateAction<boolean>>
 ) => {
   const storedSession = getSession();
   const addOrViewCartConfig = getApiCartConfig();
@@ -58,7 +59,12 @@ export const addToCart = (
  * View Cart Request Handler
  * тут мы хотим посчитать общую сумму корзины
  */
-export const viewCart = (setCart) => {
+export const viewCart = (
+  setCart: (cart: ICart) => void,
+  setProcessing: React.Dispatch<React.SetStateAction<boolean>> = (
+    toggle: boolean
+  ) => {}
+) => {
   const addOrViewCartConfig = getApiCartConfig();
 
   axios
@@ -66,10 +72,117 @@ export const viewCart = (setCart) => {
     .then((res) => {
       const formattedCartData = getFormattedCartData(res?.data ?? []);
       setCart(formattedCartData);
+      setProcessing(false);
     })
     .catch((err) => {
       console.log('err', err);
+      setProcessing(false);
     });
+};
+
+/**
+ * Update Cart Request Handler
+ */
+export const updateCart = (
+  cartKey: string,
+  qty: number = 1,
+  setCart: (cart: ICart) => void,
+  setUpdatingProductProcess: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const addOrViewCartConfig = getApiCartConfig();
+
+  setUpdatingProductProcess(true);
+
+  axios
+    .put(
+      `${CART_ENDPOINT}${cartKey}`,
+      {
+        quantity: qty,
+      },
+      addOrViewCartConfig
+    )
+    .then((res) => {
+      viewCart(setCart, setUpdatingProductProcess);
+    })
+    .catch((err) => {
+      console.log('err', err);
+      setUpdatingProductProcess(false);
+    });
+};
+
+/**
+ * Delete a cart item Request handler.
+ *
+ * Deletes all products in the cart of a
+ * specific product id ( by its cart key )
+ * In a cart session, each product maintains
+ * its data( qty etc ) with a specific cart key
+ *
+ * @param {String} cartKey Cart Key.
+ * @param {Function} setCart SetCart Function.
+ * @param {Function} setRemovingProduct Set Removing Product Function.
+ */
+export const deleteCartItem = (
+  cartKey: string,
+  setCart: (cart: ICart) => void,
+  setRemovingProduct: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const addOrViewCartConfig = getApiCartConfig();
+
+  setRemovingProduct(true);
+
+  axios
+    .delete(`${CART_ENDPOINT}${cartKey}`, addOrViewCartConfig)
+    .then((res) => {
+      viewCart(setCart, setRemovingProduct);
+    })
+    .catch((err) => {
+      console.log('err', err);
+      setRemovingProduct(false);
+    });
+};
+
+/**
+ * Clear Cart Request Handler
+ *
+ * @param {Function} setCart Set Cart
+ * @param {Function} setClearCartProcessing Set Clear Cart Processing.
+ */
+export const clearCart = (
+  setCart: (cart: ICart) => void,
+  setClearCartProcessing: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  setClearCartProcessing(true);
+
+  const addOrViewCartConfig = getApiCartConfig();
+
+  axios
+    .delete(CART_ENDPOINT, addOrViewCartConfig)
+    .then((res) => {
+      viewCart(setCart, setClearCartProcessing);
+    })
+    .catch((err) => {
+      console.log('err', err);
+      setClearCartProcessing(false);
+    });
+};
+
+// Возвращает нам объект товаров в корзине, дополненный общим количеством и суммой
+/**
+ * Get Formatted Cart Data.
+ *
+ * @param cartData
+ * @return {null|{cartTotal: {totalQty: number, totalPrice: number}, cartItems: ({length}|*|*[])}}
+ */
+const getFormattedCartData = (cartData: ICartItem[]): ICart => {
+  if (!cartData || !cartData.length) {
+    return null;
+  }
+  const cartTotal = calculateCartQtyAndPrice(cartData || []);
+  return {
+    cartItems: cartData || [],
+    ...cartTotal,
+  };
 };
 
 /**
@@ -80,7 +193,7 @@ export const viewCart = (setCart) => {
  */
 
 // cartItems - массив элементов корзины
-const calculateCartQtyAndPrice = (cartItems:ICartItem[]) => {
+const calculateCartQtyAndPrice = (cartItems: ICartItem[]) => {
   const qtyAndPrice = {
     totalQty: 0,
     totalPrice: 0,
@@ -97,22 +210,4 @@ const calculateCartQtyAndPrice = (cartItems:ICartItem[]) => {
   });
 
   return qtyAndPrice;
-};
-
-// Возвращает нам объект товаров в корзине, дополненный общим количеством и суммой
-/**
- * Get Formatted Cart Data.
- *
- * @param cartData
- * @return {null|{cartTotal: {totalQty: number, totalPrice: number}, cartItems: ({length}|*|*[])}}
- */
-const getFormattedCartData = (cartData:ICartItem[]):ICart => {
-  if (!cartData || !cartData.length) {
-    return null;
-  }
-  const cartTotal = calculateCartQtyAndPrice(cartData || []);
-  return {
-    cartItems: cartData || [],
-    ...cartTotal,
-  };
 };

@@ -15,7 +15,7 @@ import { DEFAULT_IMG_URL } from '../lib/constants';
 
 
 interface Props extends ImageProps {
-  title: string;
+  title?: string;
   className?: string;
   layout?: string;
   objectFit?: string;

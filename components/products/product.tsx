@@ -13,15 +13,19 @@ const Product = ({ product }: { product: IProduct }) => {
   const productType = product?.type ?? '';
 
   return (
-    <div className="my-2 w-full overflow-hidden px-2 sm:w-1/2 md:w-1/3 xl:w-1/4">
-      <Link href={product?.permalink ?? '/'}>
-        <ImageMod
-          src={img?.src ?? ''}
-          alt={img?.alt ?? ''}
-          title={product?.name ?? ''}
-          width={380}
-          height={380}
-        />
+    <div className="my-2 flex flex-col justify-between  w-full overflow-hidden px-2 sm:w-1/2 md:w-1/3 xl:w-1/4">
+      <Link href={product?.permalink ?? '/'} className='mb-4'>
+       <div className='h-96 overflow-hidden'>
+          <ImageMod
+            src={img?.src ?? ''}
+            alt={img?.alt ?? ''}
+            title={product?.name ?? ''}
+            width={300}
+            height={300}
+            objectFit={'cover'}
+            className='mb-2 mix-blend-darken overflow-hidden object-cover'
+          />
+       </div>
         <h3 className="font-bold uppercase">{product?.name ?? ''}</h3>
         <div
           dangerouslySetInnerHTML={{
