@@ -5,7 +5,7 @@ import Header from './header';
 import Meta from './meta';
 import Container from './container';
 
-export default function Layout({ preview, children }) {
+export default function Layout({ preview=false, children }) {
   return (
     <CartCountProvider>
       <Meta />

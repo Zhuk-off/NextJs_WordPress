@@ -1,11 +1,14 @@
+import axios from 'axios';
+import { count } from 'console';
 import { GetStaticProps } from 'next';
-import CartItemsContainer from '../components/cart/cart-items-container';
+import CheckoutForm from '../components/checkout/checkout-form';
 import Container from '../components/container';
 import Layout from '../components/layout';
 import { HeaderFooterContext } from '../context/headerFooterContext';
-import { getFooterHeaderRestAPIData, getPostAndMorePosts } from '../lib/api';
+import { getFooterHeaderRestAPIData } from '../lib/api';
+import { WOOCOMMERCE_COUNTRIES_ENDPOINT } from '../lib/constants';
 
-const Cart = ({ preview, dataRest }) => {
+const Checkout = ({ dataRest, countries }) => {
   if (!dataRest) return null;
   const { data } = dataRest;
 
@@ -13,24 +16,24 @@ const Cart = ({ preview, dataRest }) => {
     <HeaderFooterContext.Provider value={{ data }}>
       <Layout>
         <Container>
-          <h1 className="uppercase tracking-0.5px">
-            Товары, что вы добавили в корзину
-          </h1>
-          <CartItemsContainer />
+          <h1>Checkout</h1>
+          <CheckoutForm countriesData={countries} />
         </Container>
       </Layout>
     </HeaderFooterContext.Provider>
   );
 };
 
-export default Cart;
+export default Checkout;
 
 export const getStaticProps: GetStaticProps = async () => {
   const dataRest = await getFooterHeaderRestAPIData();
+  const { data: countries } = await axios.get(WOOCOMMERCE_COUNTRIES_ENDPOINT);
 
   return {
     props: {
       dataRest,
+      countries: countries || {},
     },
     revalidate: 10,
   };
