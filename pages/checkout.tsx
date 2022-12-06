@@ -5,10 +5,12 @@ import CheckoutForm from '../components/checkout/checkout-form';
 import Container from '../components/container';
 import Layout from '../components/layout';
 import { HeaderFooterContext } from '../context/headerFooterContext';
+import { ICountriesData } from '../interfaces/countries.interface';
+import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
 import { getFooterHeaderRestAPIData } from '../lib/api';
 import { WOOCOMMERCE_COUNTRIES_ENDPOINT } from '../lib/constants';
 
-const Checkout = ({ dataRest, countries }) => {
+const Checkout = ({ dataRest, countries }:{dataRest: IHeaderFooterContext, countries:ICountriesData}) => {
   if (!dataRest) return null;
   const { data } = dataRest;
 

@@ -32,7 +32,6 @@ const CartItem = ({
    * @type {React.MutableRefObject<boolean>}
    */
   const isMounted = useRef(false);
-  console.log(isMounted);
 
   useEffect(() => {
     isMounted.current = true;
