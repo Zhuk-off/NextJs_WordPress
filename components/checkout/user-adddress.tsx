@@ -2,6 +2,7 @@ import { IShippingCountry } from '../../interfaces/countries.interface';
 import { IAddress } from '../../interfaces/order.interface';
 import CountrySelection from './country-selection';
 import InputField from './form-elements/input-field';
+import StatesSelection from './states-selection';
 
 const Address = ({
   input = {},
@@ -85,7 +86,7 @@ const Address = ({
         containerClassNames="mb-4"
       />
       {/* State */}
-      {/* <StateSelection
+      {/* <StatesSelection
 				input={input}
 				handleOnChange={handleOnChange}
 				states={states}

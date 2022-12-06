@@ -6,7 +6,8 @@ export interface IAddress {
   states: unknown[],
   handleOnChange:(event:unknown, isSipping:boolean, isBilling:boolean) => void,
   isFetchingStates:boolean,
-  isShipping:boolean
+  isShipping?:boolean
+  isBillingOrShipping?:boolean
 }
 
 export interface IDefaultCustomerInfo {

@@ -134,6 +134,21 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
                   states={theShippingStates}
                 />
               </div>
+             {/*Billing Details*/ }
+             {/* { input?.billingDifferentThanShipping ? (
+								<div className="billing-details">
+									<h2 className="text-xl font-medium mb-4">Billing Details</h2>
+									<Address
+										states={ theBillingStates }
+										countries={ billingCountries.length ? billingCountries: shippingCountries }
+										input={ input?.billing }
+										handleOnChange={ ( event ) => handleOnChange( event, false, true ) }
+										isFetchingStates={ isFetchingBillingStates }
+										isShipping={ false }
+										isBillingOrShipping
+									/>
+								</div>
+							) : null } */}
             </div>
           </div>
         </form>
