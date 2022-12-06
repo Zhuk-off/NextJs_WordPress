@@ -1,5 +1,9 @@
 import { ReactComponentElement } from 'react';
 import * as SvgIconsComponent from '../components/icons';
+import {
+  ICountriesData,
+  IShippingCountry,
+} from '../interfaces/countries.interface';
 import { FRONTEND_SITE_URL } from './constants';
 
 /** Use to modify page URLs from backend to frontend.
@@ -89,3 +93,22 @@ export const getIconComponentByName = (
     return null;
   }
 };
+
+export function modifyCountries(countries: ICountriesData) {
+  const eswatiniCountry = countries.shippingCountries.find(
+    (country) => country.countryName === 'Eswatini'
+  );
+  eswatiniCountry.countryName = 'Эсватини';
+  const sortCountries = countries.shippingCountries.sort(SortCountries);
+  return sortCountries;
+}
+
+function SortCountries(country1: IShippingCountry, country2: IShippingCountry) {
+  if (country1.countryName < country2.countryName) {
+    return -1;
+  }
+  if (country1.countryName > country2.countryName) {
+    return 1;
+  }
+  return 0;
+}

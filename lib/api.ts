@@ -1,6 +1,10 @@
-import axios from 'axios';
-import { FOOTER_HEADER_ENDPOINT } from './constants';
-import { modifyUrlBackendToFrontend } from './helpers';
+import axios, { AxiosResponse } from 'axios';
+import { ICountriesData } from '../interfaces/countries.interface';
+import {
+  FOOTER_HEADER_ENDPOINT,
+  WOOCOMMERCE_COUNTRIES_ENDPOINT,
+} from './constants';
+import { modifyCountries, modifyUrlBackendToFrontend } from './helpers';
 
 const API_URL = process.env.WORDPRESS_API_URL;
 
@@ -218,6 +222,15 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
 // Get footer and header data from the plugin Headless CMS (Rest  API)
 export async function getFooterHeaderRestAPIData() {
   const { data } = await axios.get(FOOTER_HEADER_ENDPOINT);
-  const dataRestModify = modifyUrlBackendToFrontend(data)
+  const dataRestModify = modifyUrlBackendToFrontend(data);
   return dataRestModify;
+}
+
+// Get countries
+export async function getCountriesAPIData() {
+  const { data: countries }: AxiosResponse<ICountriesData, any> =
+    await axios.get(WOOCOMMERCE_COUNTRIES_ENDPOINT);
+  modifyCountries(countries);
+
+  return countries;
 }

@@ -4,8 +4,8 @@ const SvgUser = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    width={25}
-    height="100%"
+    width={18}
+    height={40}
     stroke="currentColor"
     {...props}
   >

@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import { IInputField } from '../../../interfaces/order.interface';
-import Error from '../errors';
+import Error from '../error';
 import Abbr from './abbr';
 
 

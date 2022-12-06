@@ -7,10 +7,16 @@ import Layout from '../components/layout';
 import { HeaderFooterContext } from '../context/headerFooterContext';
 import { ICountriesData } from '../interfaces/countries.interface';
 import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
-import { getFooterHeaderRestAPIData } from '../lib/api';
+import { getCountriesAPIData, getFooterHeaderRestAPIData } from '../lib/api';
 import { WOOCOMMERCE_COUNTRIES_ENDPOINT } from '../lib/constants';
 
-const Checkout = ({ dataRest, countries }:{dataRest: IHeaderFooterContext, countries:ICountriesData}) => {
+const Checkout = ({
+  dataRest,
+  countries,
+}: {
+  dataRest: IHeaderFooterContext;
+  countries: ICountriesData;
+}) => {
   if (!dataRest) return null;
   const { data } = dataRest;
 
@@ -30,7 +36,7 @@ export default Checkout;
 
 export const getStaticProps: GetStaticProps = async () => {
   const dataRest = await getFooterHeaderRestAPIData();
-  const { data: countries } = await axios.get(WOOCOMMERCE_COUNTRIES_ENDPOINT);
+  const countries = await getCountriesAPIData();
 
   return {
     props: {
