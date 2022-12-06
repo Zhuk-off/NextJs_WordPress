@@ -24,7 +24,7 @@ const Checkout = ({
     <HeaderFooterContext.Provider value={{ data }}>
       <Layout>
         <Container>
-          <h1>Checkout</h1>
+          <h1>Оформление заказа</h1>
           <CheckoutForm countriesData={countries} />
         </Container>
       </Layout>

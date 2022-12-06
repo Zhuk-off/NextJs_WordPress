@@ -13,10 +13,13 @@ const YourOrder = ({ cart }) => {
               <tr className="woo-next-cart-head-container text-left">
                 <th className="woo-next-cart-heading-el" scope="col" />
                 <th className="woo-next-cart-heading-el" scope="col">
-                  Product
+                  Товар
+                </th>
+                <th className="woo-next-cart-heading-el text-center whitespace-nowrap" scope="col">
+                  Кол-во
                 </th>
                 <th className="woo-next-cart-heading-el" scope="col">
-                  Total
+                  Итого
                 </th>
               </tr>
             </thead>
@@ -31,10 +34,13 @@ const YourOrder = ({ cart }) => {
               {/*Total*/}
               <tr className="bg-gray-200">
                 <td className="" />
-                <td className="woo-next-checkout-total text-xl font-normal">
-                  Total
+                <td className="woo-next-checkout-total text-lg font-bold whitespace-nowrap">
+                  Итого к оплате
                 </td>
-                <td className="woo-next-checkout-total text-xl font-bold">
+                <td className="woo-next-checkout-total text-lg font-bold text-center">
+                  {`${cart?.totalQty ?? ''}`}
+                </td>
+                <td className="woo-next-checkout-total text-lg whitespace-nowrap font-bold">
                   {`${cart?.totalPrice ?? ''} ${currency ?? ''}`}
                 </td>
               </tr>

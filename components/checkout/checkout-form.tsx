@@ -130,7 +130,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
             <div>
               {/* Shipping Details */}
               <div className="shipping-details">
-                <h2 className="mb-4 text-xl font-medium">Shipping Details</h2>
+                <h2 className="mb-4 text-xl font-medium">Заполните для доставки</h2>
                 <Address
                   countries={shippingCountries}
                   handleOnChange={(event) => handleOnChange(event, true, true)}
@@ -146,14 +146,14 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
                   // type="checkbox"
                   checked={input?.billingDifferentThanShipping}
                   handleOnChange={handleOnChange}
-                  label="Billing different than shipping"
+                  label="Выставить счет на другие реквизиты?"
                   containerClassNames="mb-4 pt-4"
                 />
               </div>
               {/*Billing Details*/}
               {input?.billingDifferentThanShipping ? (
                 <div className="billing-details">
-                  <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
+                  <h2 className="mb-4 text-xl font-medium">Заполните для выставления счета</h2>
                   <Address
                     states={theBillingStates}
                     countries={
@@ -174,7 +174,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
             </div>
             {/* Order & Payments */}
             <div className="your-orders">
-              <h2 className="mb-4 text-xl font-medium">Your Order</h2>
+              <h2 className="mb-4 text-xl font-medium">Ваш заказ</h2>
               <YourOrder cart={cart} />
 
               {/* Payment */}
@@ -191,7 +191,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
                   )}
                   type="submit"
                 >
-                  Place Order
+                  Отправить заказ
                 </button>
               </div>
 

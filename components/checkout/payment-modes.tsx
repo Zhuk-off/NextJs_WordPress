@@ -31,7 +31,7 @@ const PaymentModes = ({ input, handleOnChange }) => {
             type="radio"
             checked={'paypal' === paymentMethod}
           />
-          <span className="woo-next-payment-content">Pay with Paypal</span>
+          <span className="woo-next-payment-content">Paypal</span>
         </label>
       </div>
       {/*Check Payments*/}
@@ -59,7 +59,7 @@ const PaymentModes = ({ input, handleOnChange }) => {
             type="radio"
             checked={'cod' === paymentMethod}
           />
-          <span className="woo-next-payment-content">Cash on Delivery</span>
+          <span className="woo-next-payment-content">Наличными при получении</span>
         </label>
       </div>
       <div className="form-check woo-next-payment-input-container mt-2">
@@ -103,8 +103,7 @@ const PaymentModes = ({ input, handleOnChange }) => {
       </div>
       {/*	Payment Instructions*/}
       <div className="woo-next-checkout-payment-instructions mt-2">
-        Please send a check to Store Name, Store Street, Store Town, Store State
-        / County, Store Postcode.
+     Пожалуйста, проверьте правильность заполнения всех полей перед отправкой.
       </div>
     </div>
   );

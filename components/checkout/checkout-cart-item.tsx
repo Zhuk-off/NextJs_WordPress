@@ -1,3 +1,4 @@
+import { ICartItem } from '../../interfaces/cart.interface';
 import Image from '../image';
 
 const CheckoutCartItem = ({ item }) => {
@@ -17,6 +18,7 @@ const CheckoutCartItem = ({ item }) => {
         </figure>
       </td>
       <td className="woo-next-cart-element">{item?.data?.name ?? ''}</td>
+      <td className="woo-next-cart-element text-center">{`${item?.quantity}`}</td>
       <td className="woo-next-cart-element">{`${item?.line_subtotal.toFixed(
         2
       )} ${currency}`}</td>

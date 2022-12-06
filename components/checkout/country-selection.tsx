@@ -10,7 +10,7 @@ const CountrySelection = ({ input, handleOnChange, countries, isShipping }) => {
   return (
     <div className="mb-3">
       <label className="text-sm leading-7 text-gray-700" htmlFor={inputId}>
-        Country
+        Страна
         <Abbr required />
       </label>
       <div className="relative w-full border-none">
@@ -21,7 +21,7 @@ const CountrySelection = ({ input, handleOnChange, countries, isShipping }) => {
           className="inline-block w-full appearance-none rounded border border-gray-500 bg-gray-100 bg-opacity-50 py-3 pl-3 pr-8 leading-tight text-gray-500"
           id={inputId}
         >
-          <option value="">Select a country...</option>
+          <option value="">Выберите страну...</option>
           {countries &&
             countries.map((country) => (
               <option

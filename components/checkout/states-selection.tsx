@@ -29,7 +29,7 @@ const StateSelection = ({
     return (
       <div className="mb-3">
         <label className="text-sm leading-7 text-gray-700">
-          State/County
+          Штат/Округ
           <Abbr required />
         </label>
         <div className="relative w-full border-none">
@@ -53,7 +53,7 @@ const StateSelection = ({
   return (
     <div className="mb-3">
       <label className="text-sm leading-7 text-gray-600" htmlFor={inputId}>
-        State/County
+        Штат/Округ
         <Abbr required />
       </label>
       <div className="relative w-full border-none">
@@ -68,7 +68,7 @@ const StateSelection = ({
           )}
           id={inputId}
         >
-          <option value="">Select a state...</option>
+          <option value="">Выберите штат/округ...</option>
           {states.map((state, index) => (
             <option
               key={state?.stateCode ?? index}
