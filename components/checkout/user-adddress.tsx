@@ -86,13 +86,13 @@ const Address = ({
         containerClassNames="mb-4"
       />
       {/* State */}
-      {/* <StatesSelection
+      <StatesSelection
 				input={input}
 				handleOnChange={handleOnChange}
 				states={states}
 				isShipping={isShipping}
 				isFetchingStates={isFetchingStates}
-			/> */}
+			/>
       <div className="flex flex-wrap overflow-hidden sm:-mx-3">
         <InputField
           name="postcode"

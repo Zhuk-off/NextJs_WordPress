@@ -2,6 +2,33 @@ import axios from 'axios';
 import { WOOCOMMERCE_STATES_ENDPOINT } from './constants';
 
 /**
+ * Handle Billing Different Than Shipping.
+ *
+ * @param input
+ * @param setInput
+ * @param target
+ */
+export const handleBillingDifferentThanShipping = (input, setInput, target) => {
+  const newState = {
+    ...input,
+    [target.name]: !input.billingDifferentThanShipping,
+  };
+  setInput(newState);
+};
+
+/**
+ * Handle Create Account.
+ *
+ * @param input
+ * @param setInput
+ * @param target
+ */
+export const handleCreateAccount = (input, setInput, target) => {
+  const newState = { ...input, [target.name]: !input.createAccount };
+  setInput(newState);
+};
+
+/**
  * Set states for the country.
  *
  * @param {Object} target Target.
@@ -43,10 +70,12 @@ export const getStates = async (countryCode = '') => {
   if (!countryCode) {
     return [];
   }
-
-  const { data } = await axios.get(WOOCOMMERCE_STATES_ENDPOINT, {
-    params: { countryCode },
-  });
-
-  return data?.states ?? [];
+  try {
+    const { data } = await axios.get(WOOCOMMERCE_STATES_ENDPOINT, {
+      params: { countryCode },
+    });
+    return data?.states ?? [];
+  } catch (error) {
+    return [];
+  }
 };

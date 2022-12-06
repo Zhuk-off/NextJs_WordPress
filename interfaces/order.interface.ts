@@ -1,13 +1,17 @@
-import { IBillingCountry, IShippingCountry } from "./countries.interface";
+import { IBillingCountry, IShippingCountry } from './countries.interface';
 
 export interface IAddress {
-  input:IDefaultCustomerInfo,
-  countries:IShippingCountry[] | IBillingCountry[],
-  states: unknown[],
-  handleOnChange:(event:unknown, isSipping:boolean, isBilling:boolean) => void,
-  isFetchingStates:boolean,
-  isShipping?:boolean
-  isBillingOrShipping?:boolean
+  input: IDefaultCustomerInfo;
+  countries: IShippingCountry[] | IBillingCountry[];
+  states: unknown[];
+  handleOnChange: (
+    event: unknown,
+    isSipping: boolean,
+    isBilling: boolean
+  ) => void;
+  isFetchingStates: boolean;
+  isShipping?: boolean;
+  isBillingOrShipping?: boolean;
 }
 
 export interface IDefaultCustomerInfo {
@@ -25,17 +29,26 @@ export interface IDefaultCustomerInfo {
   errors?: null | string;
 }
 
-export interface IInputOrder  {
-  billing: IDefaultCustomerInfo,
-  shipping: IDefaultCustomerInfo ,
-  createAccount: boolean,
-  orderNotes: string,
-  billingDifferentThanShipping: boolean,
-  paymentMethod: 'cod'
+export interface IInputOrder {
+  billing: IDefaultCustomerInfo;
+  shipping: IDefaultCustomerInfo;
+  createAccount: boolean;
+  orderNotes: string;
+  billingDifferentThanShipping: boolean;
+  paymentMethod: IPaymentMethod;
 }
 
+export type IPaymentMethod =
+  | 'bacs'
+  | 'paypal'
+  | 'cheque'
+  | 'cod'
+  | 'jccpaymentgatewayredirect'
+  | 'ccavenue'
+  | 'stripe';
+
 export interface IInputField {
-  handleOnChange: any
+  handleOnChange: any;
   inputValue?: string;
   name: string;
   type?: string;

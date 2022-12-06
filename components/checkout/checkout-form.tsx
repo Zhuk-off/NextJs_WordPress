@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { useContext, useState } from 'react';
 import { CartContext } from '../../context/CartCounter';
 import { ICountriesData } from '../../interfaces/countries.interface';
@@ -5,8 +6,15 @@ import {
   IDefaultCustomerInfo,
   IInputOrder,
 } from '../../interfaces/order.interface';
-import { setStatesForCountry } from '../../lib/checkoutHelpers';
+import {
+  handleBillingDifferentThanShipping,
+  handleCreateAccount,
+  setStatesForCountry,
+} from '../../lib/checkoutHelpers';
+import CheckboxField from './form-elements/checkbox-field';
+import PaymentModes from './payment-modes';
 import Address from './user-adddress';
+import YourOrder from './your-order';
 
 // Using this for testing pruposes, so you dont, have to fill the checkout form over an over again.
 
@@ -49,7 +57,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     createAccount: false,
     orderNotes: '',
     billingDifferentThanShipping: false, // If the user decides that the delivery address is different from the payment address
-    paymentMethod: 'cod', // Payment method - cash on delivery
+    paymentMethod: 'cod', // Payment method - cash on delivery and other
   };
 
   const [cart, setCart] = useContext(CartContext);
@@ -64,8 +72,6 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
   const [createOrderDate, setCreateOrderDate] = useState({}); // information about order
 
   const handleFormSubmit = () => {};
-  const handleCreateAccount = (input, setInput, target) => {};
-  const handleBillingDifferentThanShipping = (input, setInput, target) => {};
   const handleOnChange = async (
     event,
     isSipping = false,
@@ -134,21 +140,66 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
                   states={theShippingStates}
                 />
               </div>
-             {/*Billing Details*/ }
-             {/* { input?.billingDifferentThanShipping ? (
-								<div className="billing-details">
-									<h2 className="text-xl font-medium mb-4">Billing Details</h2>
-									<Address
-										states={ theBillingStates }
-										countries={ billingCountries.length ? billingCountries: shippingCountries }
-										input={ input?.billing }
-										handleOnChange={ ( event ) => handleOnChange( event, false, true ) }
-										isFetchingStates={ isFetchingBillingStates }
-										isShipping={ false }
-										isBillingOrShipping
-									/>
-								</div>
-							) : null } */}
+              <div>
+                <CheckboxField
+                  name="billingDifferentThanShipping"
+                  // type="checkbox"
+                  checked={input?.billingDifferentThanShipping}
+                  handleOnChange={handleOnChange}
+                  label="Billing different than shipping"
+                  containerClassNames="mb-4 pt-4"
+                />
+              </div>
+              {/*Billing Details*/}
+              {input?.billingDifferentThanShipping ? (
+                <div className="billing-details">
+                  <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
+                  <Address
+                    states={theBillingStates}
+                    countries={
+                      billingCountries.length
+                        ? billingCountries
+                        : shippingCountries
+                    }
+                    input={input?.billing}
+                    handleOnChange={(event) =>
+                      handleOnChange(event, false, true)
+                    }
+                    isFetchingStates={isFetchingBillingStates}
+                    isShipping={false}
+                    isBillingOrShipping
+                  />
+                </div>
+              ) : null}
+            </div>
+            {/* Order & Payments */}
+            <div className="your-orders">
+              <h2 className="mb-4 text-xl font-medium">Your Order</h2>
+              <YourOrder cart={cart} />
+
+              {/* Payment */}
+              <h2 className="mb-4 text-xl font-medium">
+                Выберете способ оплаты
+              </h2>
+              <PaymentModes input={input} handleOnChange={handleOnChange} />
+              <div className="woo-next-place-order-btn-wrap mt-5">
+                <button
+                  disabled={isOrderProcessing}
+                  className={cx(
+                    'w-auto rounded-sm bg-purple-600 px-5 py-3 text-white xl:w-full',
+                    { 'opacity-50': isOrderProcessing }
+                  )}
+                  type="submit"
+                >
+                  Place Order
+                </button>
+              </div>
+
+              {/* Checkout Loading*/}
+              {isOrderProcessing && <p>Processing Order...</p>}
+              {requestError && (
+                <p>Error : {requestError} :( Please try again</p>
+              )}
             </div>
           </div>
         </form>
