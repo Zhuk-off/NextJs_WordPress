@@ -3,7 +3,6 @@ import { IInputField } from '../../../interfaces/order.interface';
 import Error from '../error';
 import Abbr from './abbr';
 
-
 const InputField = ({
   handleOnChange = () => null,
   inputValue = '',

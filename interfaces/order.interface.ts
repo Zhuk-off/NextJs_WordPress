@@ -1,8 +1,8 @@
-import { IShippingCountry } from "./countries.interface";
+import { IBillingCountry, IShippingCountry } from "./countries.interface";
 
 export interface IAddress {
   input:IDefaultCustomerInfo,
-  countries:IShippingCountry[],
+  countries:IShippingCountry[] | IBillingCountry[],
   states: unknown[],
   handleOnChange:(event:unknown, isSipping:boolean, isBilling:boolean) => void,
   isFetchingStates:boolean,

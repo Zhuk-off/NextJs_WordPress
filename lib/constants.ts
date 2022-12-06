@@ -10,4 +10,4 @@ export const DEFAULT_IMG_URL =
   'https://via.placeholder.com/380.png?text=No%20Photo+:(';
 export const CART_ENDPOINT = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/rae/v1/cart/items/`
 export const WOOCOMMERCE_COUNTRIES_ENDPOINT = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/rae/v1/wc/countries/`
-export const WOOCOMMERCE_STATE_ENDPOINT = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/rae/v1/wc/states`
+export const WOOCOMMERCE_STATES_ENDPOINT = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/rae/v1/wc/states`
