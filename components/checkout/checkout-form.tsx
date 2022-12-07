@@ -11,6 +11,7 @@ import {
   handleCreateAccount,
   setStatesForCountry,
 } from '../../lib/checkoutHelpers';
+import validateAndSanitizeCheckoutForm from '../../utils/validator/checkout';
 import CheckboxField from './form-elements/checkbox-field';
 import PaymentModes from './payment-modes';
 import Address from './user-adddress';
@@ -71,7 +72,43 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
   const [isOrderProcessing, setIsOrderProcessing] = useState(false); // Loading when sending an order
   const [createOrderDate, setCreateOrderDate] = useState({}); // information about order
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    /**
+     * Validate Billing and Shipping Details
+     *
+     * Note:
+     * 1. If billing is different than shipping address, only then validate billing.
+     * 2. We are passing theBillingStates?.length and theShippingStates?.length, so that
+     * the respective states should only be mandatory, if a country has states.
+     */
+    const billingValidationResult = input?.billingDifferentThanShipping
+      ? validateAndSanitizeCheckoutForm(
+          input?.billing,
+          Boolean(theBillingStates?.length)
+        )
+      : {
+          errors: null,
+          isValid: true,
+        };
+    const shippingValidationResult = validateAndSanitizeCheckoutForm(
+      input?.shipping,
+      Boolean(theShippingStates?.length)
+    );
+
+    setInput({
+      ...input,
+      billing: { ...input.billing, errors: billingValidationResult.errors },
+      shipping: { ...input.shipping, errors: shippingValidationResult.errors },
+    });
+
+    // If there are any errors, return.
+    if (!shippingValidationResult.isValid || !billingValidationResult.isValid) {
+      return null;
+    }
+  };
+
   const handleOnChange = async (
     event,
     isSipping = false,
@@ -130,7 +167,9 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
             <div>
               {/* Shipping Details */}
               <div className="shipping-details">
-                <h2 className="mb-4 text-xl font-medium">Заполните для доставки</h2>
+                <h2 className="mb-4 text-xl font-medium">
+                  Заполните для доставки
+                </h2>
                 <Address
                   countries={shippingCountries}
                   handleOnChange={(event) => handleOnChange(event, true, true)}
@@ -153,7 +192,9 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
               {/*Billing Details*/}
               {input?.billingDifferentThanShipping ? (
                 <div className="billing-details">
-                  <h2 className="mb-4 text-xl font-medium">Заполните для выставления счета</h2>
+                  <h2 className="mb-4 text-xl font-medium">
+                    Заполните для выставления счета
+                  </h2>
                   <Address
                     states={theBillingStates}
                     countries={

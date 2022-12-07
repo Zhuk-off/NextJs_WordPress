@@ -26,7 +26,9 @@ export interface IDefaultCustomerInfo {
   email?: string;
   phone?: string;
   company?: string;
-  errors?: null | string;
+  errors?: null | object;
+  createAccount?:unknown
+  orderNotes?:unknown
 }
 
 export interface IInputOrder {
