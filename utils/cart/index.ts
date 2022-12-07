@@ -148,26 +148,21 @@ export const deleteCartItem = (
  * @param {Function} setCart Set Cart
  * @param {Function} setClearCartProcessing Set Clear Cart Processing.
  */
-export const clearCart = (
-  setCart: (cart: ICart) => void,
-  setClearCartProcessing: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+export const clearCart = async (setCart, setClearCartProcessing) => {
   setClearCartProcessing(true);
 
   const addOrViewCartConfig = getApiCartConfig();
 
-  axios
-    .delete(CART_ENDPOINT, addOrViewCartConfig)
-    .then((res) => {
-      viewCart(setCart, setClearCartProcessing);
-    })
-    .catch((err) => {
-      console.log('err', err);
-      setClearCartProcessing(false);
-    });
+  try {
+    const response = await axios.delete(CART_ENDPOINT, addOrViewCartConfig);
+    viewCart(setCart, setClearCartProcessing);
+  } catch (err) {
+    console.log('err', err);
+    setClearCartProcessing(false);
+  }
 };
 
-// Возвращает нам объект товаров в корзине, дополненный общим количеством и суммой
+// Returns to us the object of goods in the basket, supplemented by the total number and sum
 /**
  * Get Formatted Cart Data.
  *

@@ -9,6 +9,7 @@ import {
 import {
   handleBillingDifferentThanShipping,
   handleCreateAccount,
+  handleOtherPaymentMethodCheckout,
   setStatesForCountry,
 } from '../../lib/checkoutHelpers';
 import validateAndSanitizeCheckoutForm from '../../utils/validator/checkout';
@@ -19,35 +20,35 @@ import YourOrder from './your-order';
 
 // Using this for testing pruposes, so you dont, have to fill the checkout form over an over again.
 
-// const defaultCustomerInfo:IDefaultCustomerInfo = {
-//   firstName: 'Александр',
-//   lastName: 'Иванов',
-//   address1: 'ул. Богатырева 16, кв. 56',
-//   address2: 'ул. Богдана Хмельничкого 36, корп. 2, кв. 8',
-//   city: 'Беларусь',
-//   country: 'Витебск',
-//   state: '',
-//   postcode: '210026',
-//   email: 'alex.ivanov@gmail.com',
-//   phone: '+375297116455',
-//   company: 'ООО "Иванов и пратнеры"',
-//   errors: null,
-// }
-
 const defaultCustomerInfo: IDefaultCustomerInfo = {
-  firstName: '',
-  lastName: '',
-  address1: '',
-  address2: '',
-  city: '',
-  country: '',
+  firstName: 'Александр',
+  lastName: 'Иванов',
+  address1: 'ул. Богатырева 16, кв. 56',
+  address2: 'ул. Богдана Хмельничкого 36, корп. 2, кв. 8',
+  city: 'Беларусь',
+  country: 'Витебск',
   state: '',
-  postcode: '',
-  email: '',
-  phone: '',
-  company: '',
+  postcode: '210026',
+  email: 'alex.ivanov@gmail.com',
+  phone: '+375297116455',
+  company: 'ООО "Иванов и пратнеры"',
   errors: null,
 };
+
+// const defaultCustomerInfo: IDefaultCustomerInfo = {
+//   firstName: '',
+//   lastName: '',
+//   address1: '',
+//   address2: '',
+//   city: '',
+//   country: '',
+//   state: '',
+//   postcode: '',
+//   email: '',
+//   phone: '',
+//   company: '',
+//   errors: null,
+// };
 
 const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
   const { billingCountries, shippingCountries } = countriesData || {};
@@ -70,7 +71,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     useState(false); // Loading state
   const [isFetchingBillingStates, setIsFetchingBillingStates] = useState(false); // Loading state
   const [isOrderProcessing, setIsOrderProcessing] = useState(false); // Loading when sending an order
-  const [createOrderDate, setCreateOrderDate] = useState({}); // information about order
+  const [createdOrderData, setCreatedOrderData] = useState({}); // information about order
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -107,6 +108,28 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     if (!shippingValidationResult.isValid || !billingValidationResult.isValid) {
       return null;
     }
+
+    // For stripe payment mode, handle the strip payment
+    if ('stripe' === input.paymentMethod) {
+      return null;
+    }
+
+    // For Any other payment mode, create the order and redirect the user to payment url.
+    const createdOrderData = await handleOtherPaymentMethodCheckout(
+      input,
+      cart?.cartItems,
+      setRequestError,
+      setCart,
+      setIsOrderProcessing,
+      setCreatedOrderData
+    );
+
+    if (createdOrderData.paymentUrl) {
+      console.log('hey', createdOrderData);
+      // window.location.href = createdOrderData.paymentUrl;
+    }
+
+    setRequestError(null); //If he has reached this moment, then this means that there is no error
   };
 
   const handleOnChange = async (
