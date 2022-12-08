@@ -67,7 +67,7 @@ const Address = ({
       />
       <InputField
         name="address2"
-        // inputValue={input?.address2}
+        inputValue={input?.address2}
         handleOnChange={handleOnChange}
         label="Другой адрес"
         placeholder="ул. Богатырева, д.56 (опционально)"

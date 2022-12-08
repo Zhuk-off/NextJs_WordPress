@@ -31,6 +31,8 @@ export const handleOtherPaymentMethodCheckout = async (
   );
   const cartCleared = await clearCart(setCart, () => {});
   setIsOrderProcessing(false);
+  console.log('cartCleared', cartCleared);
+  
 
   if (!customerOrderData?.orderId || cartCleared?.error) {
     setRequestError('Clear cart failed');

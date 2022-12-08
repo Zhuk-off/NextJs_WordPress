@@ -25,13 +25,13 @@ const defaultCustomerInfo: IDefaultCustomerInfo = {
   lastName: 'Иванов',
   address1: 'ул. Богатырева 16, кв. 56',
   address2: 'ул. Богдана Хмельничкого 36, корп. 2, кв. 8',
-  city: 'Беларусь',
-  country: 'Витебск',
+  city: 'Витебск',
+  country: 'Беларусь',
   state: '',
   postcode: '210026',
   email: 'alex.ivanov@gmail.com',
   phone: '+375297116455',
-  company: 'ООО "Иванов и пратнеры"',
+  company: 'ООО "Иванов и партнеры"',
   errors: null,
 };
 
