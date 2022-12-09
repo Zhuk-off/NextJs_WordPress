@@ -1,6 +1,8 @@
+
+import { IConfig } from '../../interfaces/cart.interface';
 import { getSession } from './session';
 
-export const getApiCartConfig = () => {
+export const getApiCartConfig = (): IConfig => {
   const config = {
     headers: {
       'X-Headless-CMS': true,

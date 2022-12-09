@@ -1,3 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
+import { ICartItem } from '../../interfaces/cart.interface';
+import {
+  ICreateTheOrderResponseProps,
+  IInputOrder,
+} from '../../interfaces/order.interface';
+import {
+  ILineItemProps,
+  IWooCreateOrder,
+} from '../../interfaces/ordersWoo.interfaces';
+
 /**
  * Get Formatted create order data.
  *
@@ -5,7 +16,10 @@
  * @param products
  * @return {{shipping: {country: *, city: *, phone: *, address_1: (string|*), address_2: (string|*), postcode: (string|*), last_name: (string|*), company: *, state: *, first_name: (string|*), email: *}, payment_method_title: string, line_items: (*[]|*), payment_method: string, billing: {country: *, city: *, phone: *, address_1: (string|*), address_2: (string|*), postcode: (string|*), last_name: (string|*), company: *, state: *, first_name: (string|*), email: *}}}
  */
-export const getCreateOrderData = (order, products) => {
+export const getCreateOrderData = (
+  order: IInputOrder,
+  products: ICartItem[]
+): IWooCreateOrder => {
   // Set the billing Data to shipping, if applicable.
   const billingData = order.billingDifferentThanShipping
     ? order.billing
@@ -22,8 +36,8 @@ export const getCreateOrderData = (order, products) => {
       country: order?.shipping?.country,
       state: order?.shipping?.state,
       postcode: order?.shipping?.postcode,
-      email: order?.shipping?.email,
-      phone: order?.shipping?.phone,
+      // email: order?.shipping?.email,
+      // phone: order?.shipping?.phone,
       company: order?.shipping?.company,
     },
     billing: {
@@ -52,7 +66,9 @@ export const getCreateOrderData = (order, products) => {
  *
  * @returns {*[]|*} Line items, Array of objects.
  */
-export const getCreateOrderLineItems = (products) => {
+export const getCreateOrderLineItems = (
+  products: ICartItem[]
+): ILineItemProps[] => {
   if (!products || !Array.isArray(products)) {
     return [];
   }
@@ -75,11 +91,11 @@ export const getCreateOrderLineItems = (products) => {
  * @returns {Promise<{orderId: null, error: string}>}
  */
 export const createTheOrder = async (
-  orderData,
-  setOrderFailedError,
-  previousRequestError
-) => {
-  let response = {
+  orderData: IWooCreateOrder,
+  setOrderFailedError: Dispatch<SetStateAction<string>>,
+  previousRequestError: string
+): Promise<ICreateTheOrderResponseProps> => {
+  let response: ICreateTheOrderResponseProps = {
     orderId: null,
     total: '',
     currency: '',
@@ -96,7 +112,7 @@ export const createTheOrder = async (
   setOrderFailedError('');
 
   try {
-    const request = await fetch('/api/create-order', {
+    const request: Response = await fetch('/api/create-order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +120,8 @@ export const createTheOrder = async (
       body: JSON.stringify(orderData),
     });
 
-    const result = await request.json();
+    const result: ICreateTheOrderResponseProps = await request.json();
+
     if (result.error) {
       response.error = result.error;
       setOrderFailedError(

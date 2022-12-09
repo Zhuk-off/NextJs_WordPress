@@ -77,20 +77,20 @@ export interface IMetaDataProps {
 }
 
 export interface ILineItemProps {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   product_id: number;
-  variation_id: number;
+  variation_id?: number;
   quantity: number;
-  tax_class: string;
-  subtotal: string;
-  subtotal_tax: string;
-  total: string;
-  total_tax: string;
-  taxes: ITaxesProps[];
-  meta_data: IMetaDataProps[];
-  sku: string;
-  price: string;
+  tax_class?: string;
+  subtotal?: string;
+  subtotal_tax?: string;
+  total?: string;
+  total_tax?: string;
+  taxes?: ITaxesProps[];
+  meta_data?: IMetaDataProps[];
+  sku?: string;
+  price?: string;
 }
 
 export interface ITaxesProps {
@@ -157,18 +157,18 @@ interface IWooOrderProps extends IWooOrderPropsBasicData {
 export interface IWooCreateOrder {
   payment_method: string;
   payment_method_title: string;
-  set_paid: boolean;
+  set_paid?: boolean;
   billing: IBillingProps;
   shipping: IShippingProps;
   line_items: ILineItemProps[];
-  shipping_lines: IShippingLineProps[];
+  shipping_lines?: IShippingLineProps[];
 }
 
 export interface IWooCreateOrderResponse extends IWooOrderPropsBasicData {
   _links: ILinksWooResponse;
 }
 
-interface ILinksWooResponse {
+export interface ILinksWooResponse {
   self: ILinkWooResponse[];
   collection: ILinkWooResponse[];
 }

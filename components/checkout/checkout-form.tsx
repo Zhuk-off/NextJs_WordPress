@@ -1,7 +1,7 @@
 import cx from 'classnames';
-import { useContext, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { CartContext } from '../../context/CartCounter';
-import { ICountriesData } from '../../interfaces/countries.interface';
+import { ICountriesData, IState } from '../../interfaces/countries.interface';
 import {
   IDefaultCustomerInfo,
   IInputOrder,
@@ -63,17 +63,18 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
   };
 
   const [cart, setCart] = useContext(CartContext);
-  const [input, setInput] = useState(initialState); // Here we will store all usations of entry of information
-  const [requestError, setRequestError] = useState(null); // Error information is stored here
-  const [theShippingStates, setTheShippingStates] = useState([]); // Here we keep a delivery state, if the user has chosen a specific country, we must be able to get this data
-  const [theBillingStates, setTheBillingStates] = useState([]); // Here we keep a billing state
+  const [input, setInput] = useState<IInputOrder>(initialState); // Here we will store all usations of entry of information
+  const [requestError, setRequestError] = useState<string | null>(null); // Error information is stored here
+  const [theShippingStates, setTheShippingStates] = useState<IState[]>([]); // Here we keep a delivery state, if the user has chosen a specific country, we must be able to get this data
+  const [theBillingStates, setTheBillingStates] = useState<IState[]>([]); // Here we keep a billing state
   const [isFetchingShippingStates, setIsFetchingShippingStates] =
-    useState(false); // Loading state
-  const [isFetchingBillingStates, setIsFetchingBillingStates] = useState(false); // Loading state
-  const [isOrderProcessing, setIsOrderProcessing] = useState(false); // Loading when sending an order
+    useState<boolean>(false); // Loading state
+  const [isFetchingBillingStates, setIsFetchingBillingStates] =
+    useState<boolean>(false); // Loading state
+  const [isOrderProcessing, setIsOrderProcessing] = useState<boolean>(false); // Loading when sending an order
   const [createdOrderData, setCreatedOrderData] = useState({}); // information about order
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     /**
@@ -133,11 +134,10 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
   };
 
   const handleOnChange = async (
-    event,
-    isSipping = false,
-    isBillingOrShipping = false
-  ) => {
-    1;
+    event: ChangeEvent<HTMLInputElement & HTMLSelectElement>,
+    isSipping: boolean = false,
+    isBillingOrShipping: boolean = false
+  ): Promise<void> => {
     const { target } = event || {};
     if ('createAccount' === target.name) {
       handleCreateAccount(input, setInput, target);
@@ -153,10 +153,11 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
       const newState = { ...input, [target.name]: target.value };
       setInput(newState);
     }
-    console.log('input', input);
   };
 
-  const handleShippingChange = async (target) => {
+  const handleShippingChange = async (
+    target: EventTarget & HTMLSelectElement
+  ) => {
     const newState = {
       ...input,
       shipping: { ...input?.shipping, [target.name]: target.value },
@@ -169,7 +170,9 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     );
   };
 
-  const handleBillingChange = async (target) => {
+  const handleBillingChange = async (
+    target: EventTarget & HTMLSelectElement
+  ) => {
     const newState = {
       ...input,
       billing: { ...input?.billing, [target.name]: target.value },
@@ -195,7 +198,9 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
                 </h2>
                 <Address
                   countries={shippingCountries}
-                  handleOnChange={(event) => handleOnChange(event, true, true)}
+                  handleOnChange={(
+                    event: ChangeEvent<HTMLInputElement & HTMLSelectElement>
+                  ) => handleOnChange(event, true, true)}
                   input={input?.shipping}
                   isFetchingStates={isFetchingBillingStates}
                   isShipping
@@ -226,9 +231,9 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
                         : shippingCountries
                     }
                     input={input?.billing}
-                    handleOnChange={(event) =>
-                      handleOnChange(event, false, true)
-                    }
+                    handleOnChange={(
+                      event: ChangeEvent<HTMLInputElement & HTMLSelectElement>
+                    ) => handleOnChange(event, false, true)}
                     isFetchingStates={isFetchingBillingStates}
                     isShipping={false}
                     isBillingOrShipping

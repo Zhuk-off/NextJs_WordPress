@@ -1,4 +1,11 @@
 import axios from 'axios';
+import { Dispatch, SetStateAction } from 'react';
+import { ICart, ICartItem } from '../interfaces/cart.interface';
+import { IState } from '../interfaces/countries.interface';
+import {
+  ICreateTheOrderResponseProps,
+  IInputOrder,
+} from '../interfaces/order.interface';
 import { clearCart } from '../utils/cart';
 import { createTheOrder, getCreateOrderData } from '../utils/checkout/order';
 import { WOOCOMMERCE_STATES_ENDPOINT } from './constants';
@@ -15,13 +22,13 @@ import { WOOCOMMERCE_STATES_ENDPOINT } from './constants';
  * @return {Promise<{orderId: null, error: string}|null>}
  */
 export const handleOtherPaymentMethodCheckout = async (
-  input,
-  products,
-  setRequestError,
-  setCart,
-  setIsOrderProcessing,
-  setCreatedOrderData
-) => {
+  input: IInputOrder,
+  products: ICartItem[],
+  setRequestError: Dispatch<SetStateAction<string>>,
+  setCart: (cart: ICart) => void,
+  setIsOrderProcessing: Dispatch<SetStateAction<boolean>>,
+  setCreatedOrderData: Dispatch<SetStateAction<{}>>
+): Promise<ICreateTheOrderResponseProps> => {
   setIsOrderProcessing(true);
   const orderData = getCreateOrderData(input, products);
   const customerOrderData = await createTheOrder(
@@ -29,12 +36,10 @@ export const handleOtherPaymentMethodCheckout = async (
     setRequestError,
     ''
   );
-  const cartCleared = await clearCart(setCart, () => {});
+  await clearCart(setCart, () => {});
   setIsOrderProcessing(false);
-  console.log('cartCleared', cartCleared);
-  
 
-  if (!customerOrderData?.orderId || cartCleared?.error) {
+  if (!customerOrderData?.orderId) {
     setRequestError('Clear cart failed');
     return null;
   }
@@ -51,7 +56,11 @@ export const handleOtherPaymentMethodCheckout = async (
  * @param setInput
  * @param target
  */
-export const handleBillingDifferentThanShipping = (input, setInput, target) => {
+export const handleBillingDifferentThanShipping = (
+  input: IInputOrder,
+  setInput: Dispatch<SetStateAction<IInputOrder>>,
+  target: EventTarget & HTMLInputElement
+): void => {
   const newState = {
     ...input,
     [target.name]: !input.billingDifferentThanShipping,
@@ -66,7 +75,11 @@ export const handleBillingDifferentThanShipping = (input, setInput, target) => {
  * @param setInput
  * @param target
  */
-export const handleCreateAccount = (input, setInput, target) => {
+export const handleCreateAccount = (
+  input: IInputOrder,
+  setInput: Dispatch<SetStateAction<IInputOrder>>,
+  target: EventTarget & HTMLInputElement
+): void => {
   const newState = { ...input, [target.name]: !input.createAccount };
   setInput(newState);
 };
@@ -81,18 +94,12 @@ export const handleCreateAccount = (input, setInput, target) => {
  * @return {Promise<void>}
  */
 export const setStatesForCountry = async (
-  target,
-  setTheStates,
-  setIsFetchingStates
-) => {
+  target: EventTarget & HTMLSelectElement,
+  setTheStates: Dispatch<SetStateAction<IState[]>>,
+  setIsFetchingStates: Dispatch<SetStateAction<boolean>>
+): Promise<void> => {
   if ('country' === target.name) {
     setIsFetchingStates(true);
-    console.log('target', target);
-    console.log('target.selectedIndex', target.selectedIndex);
-    console.log(
-      'target[target.selectedIndex].getAttribute("data-countrycode");',
-      target[target.selectedIndex].getAttribute('data-countrycode')
-    );
 
     const countryCode =
       target[target.selectedIndex].getAttribute('data-countrycode');
@@ -109,7 +116,9 @@ export const setStatesForCountry = async (
  *
  * @returns {Promise<*[]>}
  */
-export const getStates = async (countryCode = '') => {
+export const getStates = async (
+  countryCode: string = ''
+): Promise<IState[]> => {
   if (!countryCode) {
     return [];
   }
@@ -117,6 +126,7 @@ export const getStates = async (countryCode = '') => {
     const { data } = await axios.get(WOOCOMMERCE_STATES_ENDPOINT, {
       params: { countryCode },
     });
+
     return data?.states ?? [];
   } catch (error) {
     return [];

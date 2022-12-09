@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Dispatch, SetStateAction } from 'react';
-import { ICart, ICartItem } from '../../interfaces/cart.interface';
+import { ICart, ICartItem, IQtyAndPrice } from '../../interfaces/cart.interface';
+
 import { CART_ENDPOINT } from '../../lib/constants';
 import { getApiCartConfig } from './api';
 import { getSession, storeSession } from './session';
@@ -22,7 +23,7 @@ export const addToCart = (
   setCart: (cart: ICart) => void,
   setIsAddedToCart: Dispatch<SetStateAction<boolean>>,
   setLoading: Dispatch<SetStateAction<boolean>>
-) => {
+): void => {
   const storedSession = getSession();
   const addOrViewCartConfig = getApiCartConfig();
 
@@ -37,7 +38,7 @@ export const addToCart = (
       },
       addOrViewCartConfig
     )
-    .then((res) => {
+    .then((res: AxiosResponse<ICartItem>) => {
       if (
         !storedSession ||
         !storedSession.length ||
@@ -64,12 +65,12 @@ export const viewCart = (
   setProcessing: React.Dispatch<React.SetStateAction<boolean>> = (
     toggle: boolean
   ) => {}
-) => {
+): void => {
   const addOrViewCartConfig = getApiCartConfig();
 
   axios
     .get(CART_ENDPOINT, addOrViewCartConfig)
-    .then((res) => {
+    .then((res: AxiosResponse<ICartItem[]>) => {
       const formattedCartData = getFormattedCartData(res?.data ?? []);
       setCart(formattedCartData);
       setProcessing(false);
@@ -88,7 +89,7 @@ export const updateCart = (
   qty: number = 1,
   setCart: (cart: ICart) => void,
   setUpdatingProductProcess: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+): void => {
   const addOrViewCartConfig = getApiCartConfig();
 
   setUpdatingProductProcess(true);
@@ -101,7 +102,7 @@ export const updateCart = (
       },
       addOrViewCartConfig
     )
-    .then((res) => {
+    .then((res: AxiosResponse<ICartItem>) => {
       viewCart(setCart, setUpdatingProductProcess);
     })
     .catch((err) => {
@@ -126,14 +127,14 @@ export const deleteCartItem = (
   cartKey: string,
   setCart: (cart: ICart) => void,
   setRemovingProduct: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+): void => {
   const addOrViewCartConfig = getApiCartConfig();
 
   setRemovingProduct(true);
 
   axios
     .delete(`${CART_ENDPOINT}${cartKey}`, addOrViewCartConfig)
-    .then((res) => {
+    .then((res: AxiosResponse<ICartItem>) => {
       viewCart(setCart, setRemovingProduct);
     })
     .catch((err) => {
@@ -148,7 +149,10 @@ export const deleteCartItem = (
  * @param {Function} setCart Set Cart
  * @param {Function} setClearCartProcessing Set Clear Cart Processing.
  */
-export const clearCart = async (setCart, setClearCartProcessing) => {
+export const clearCart = async (
+  setCart: (cart: ICart) => void,
+  setClearCartProcessing: Dispatch<React.SetStateAction<boolean>>
+):Promise<void> => {
   setClearCartProcessing(true);
 
   const addOrViewCartConfig = getApiCartConfig();
@@ -187,9 +191,9 @@ const getFormattedCartData = (cartData: ICartItem[]): ICart => {
  * @return {{totalQty: number, totalPrice: number}}
  */
 
-// cartItems - массив элементов корзины
-const calculateCartQtyAndPrice = (cartItems: ICartItem[]) => {
-  const qtyAndPrice = {
+// cartItems - An array of basket elements
+const calculateCartQtyAndPrice = (cartItems: ICartItem[]): IQtyAndPrice => {
+  const qtyAndPrice: IQtyAndPrice = {
     totalQty: 0,
     totalPrice: 0,
   };
@@ -198,7 +202,7 @@ const calculateCartQtyAndPrice = (cartItems: ICartItem[]) => {
     return qtyAndPrice;
   }
 
-  // пробегаем по всем элементам корзины и считаем все количество и всю сумму
+  // We run through all the elements of the basket and consider the whole amount and the entire amountunt and the entire amount
   cartItems.forEach((item, index) => {
     qtyAndPrice.totalQty += item?.quantity ?? 0;
     qtyAndPrice.totalPrice += item?.line_total ?? 0;

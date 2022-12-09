@@ -4,6 +4,7 @@ import {
   ICountriesData,
   IShippingCountry,
 } from '../interfaces/countries.interface';
+import { IProduct } from '../interfaces/products.interface';
 import { FRONTEND_SITE_URL } from './constants';
 
 /** Use to modify page URLs from backend to frontend.
@@ -38,12 +39,12 @@ export const modifyUrlBackendToFrontend = (data: object): object => {
   return data;
 };
 
-export const modifyUrlBackendToFrontendWC = (data: object[]): object[] => {
+export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
   data.forEach((elem) => {
     modifyUrlWCResponse(elem);
   });
 
-  function modifyUrlWCResponse(data: object) {
+  function modifyUrlWCResponse(data: IProduct): void {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         const element = data[key];
@@ -94,7 +95,7 @@ export const getIconComponentByName = (
   }
 };
 
-export function modifyCountries(countries: ICountriesData) {
+export function modifyCountries(countries: ICountriesData): IShippingCountry[] {
   const eswatiniCountry = countries.shippingCountries.find(
     (country) => country.countryName === 'Eswatini'
   );

@@ -26,3 +26,15 @@ interface ILineTaxData {
   subtotal: Array<any>;
   total: Array<any>;
 }
+
+export interface IConfig {
+  headers: {
+    'X-Headless-CMS': boolean;
+    'x-wc-session'?: string;
+  };
+}
+
+export interface IQtyAndPrice {
+  totalQty: number,
+  totalPrice: number,
+}

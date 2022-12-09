@@ -8,7 +8,7 @@ import CartItem from './cart-item';
 const CartItemsContainer = () => {
   const [cart, setCart] = useContext(CartContext);
   const { cartItems, totalPrice, totalQty } = cart || {};
-  const [isClearCartProcessing, setClearCartProcessing] = useState(false); // для спиннера загрузки, когда происходит добавление/удаление/пересчет товаров
+  const [isClearCartProcessing, setClearCartProcessing] = useState(false); // for the load spinner when adding/removing/recount of goods occurs
 
   // Clear the entire cart.
   const handleClearCart = (event) => {
@@ -21,9 +21,7 @@ const CartItemsContainer = () => {
     clearCart(setCart, setClearCartProcessing);
   };
 
-
-    const currency = cartItems?.[0]?.currency === 'Br' ? 'руб.' : '';
-
+  const currency = cartItems?.[0]?.currency === 'Br' ? 'руб.' : '';
 
   return (
     <div className="content-wrap-cart">

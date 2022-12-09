@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { IBillingCountry, IShippingCountry } from './countries.interface';
 
 export interface IAddress {
@@ -5,7 +6,7 @@ export interface IAddress {
   countries: IShippingCountry[] | IBillingCountry[];
   states: unknown[];
   handleOnChange: (
-    event: unknown,
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     isSipping: boolean,
     isBilling: boolean
   ) => void;
@@ -27,8 +28,8 @@ export interface IDefaultCustomerInfo {
   phone?: string;
   company?: string;
   errors?: null | object;
-  createAccount?:unknown
-  orderNotes?:unknown
+  createAccount?: unknown;
+  orderNotes?: unknown;
 }
 
 export interface IInputOrder {
@@ -60,4 +61,13 @@ export interface IInputField {
   required?: boolean;
   containerClassNames?: string;
   isShipping: boolean;
+}
+
+export interface ICreateTheOrderResponseProps {
+  currency: string;
+  error: string;
+  orderId: string;
+  paymentUrl: string;
+  total: string;
+  success?: boolean;
 }

@@ -9,3 +9,8 @@ export interface IShippingCountry {
   countryCode: string;
   countryName: string;
 }
+
+export interface IState {
+  stateCode: string;
+  stateName: string;
+}

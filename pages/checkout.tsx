@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { count } from 'console';
 import { GetStaticProps } from 'next';
 import CheckoutForm from '../components/checkout/checkout-form';
 import Container from '../components/container';
@@ -8,7 +6,6 @@ import { HeaderFooterContext } from '../context/headerFooterContext';
 import { ICountriesData } from '../interfaces/countries.interface';
 import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
 import { getCountriesAPIData, getFooterHeaderRestAPIData } from '../lib/api';
-import { WOOCOMMERCE_COUNTRIES_ENDPOINT } from '../lib/constants';
 
 const Checkout = ({
   dataRest,
