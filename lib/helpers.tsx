@@ -57,6 +57,7 @@ export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
               const elementReplaced = element.replace(
                 process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
                 FRONTEND_SITE_URL
+                // ''
               );
               data[key] = elementReplaced;
             }
@@ -65,6 +66,7 @@ export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
       }
     }
   }
+console.log('data ', data);
 
   return data;
 };

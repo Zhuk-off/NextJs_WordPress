@@ -9,6 +9,7 @@ const CartItemsContainer = () => {
   const [cart, setCart] = useContext(CartContext);
   const { cartItems, totalPrice, totalQty } = cart || {};
   const [isClearCartProcessing, setClearCartProcessing] = useState(false); // for the load spinner when adding/removing/recount of goods occurs
+  console.log(cart);
 
   // Clear the entire cart.
   const handleClearCart = (event) => {

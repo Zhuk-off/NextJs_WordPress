@@ -16,6 +16,7 @@ const CartItem = ({
   const [updatingProductProcess, setUpdatingProductProcess] = useState(false);
   const [removingProduct, setRemovingProduct] = useState(false);
   const productImg = item?.data?.images?.[0] ?? '';
+  const currency = item?.currency === 'Br' ? 'руб.' : '';
 
   /**
    * Do not allow state update on an unmounted component.
@@ -107,7 +108,7 @@ const CartItem = ({
     }
   };
 
-  const currency = item?.currency === 'Br' ? 'руб.' : '';
+
 
   return (
     <div className="cart-item-wrap mb-5 grid grid-cols-3 gap-6 border border-brand-bright-grey p-5">
