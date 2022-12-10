@@ -27,10 +27,31 @@ const ProductCard = ({
   const productImg = product.images?.[0] ?? '';
 
   const relatedProducts: IProduct[] = [];
+  const relatedProductsByPrice: IProduct[] = [];
 
   product.related_ids.forEach((ids) =>
     relatedProducts.push(products.find((prod) => prod.id === ids))
   );
+
+  /**
+   * We get a more expensive and cheaper product for display in recommended goods
+   */
+  if (relatedProducts?.length > 2) {
+    relatedProducts.sort(
+      (prod1, prod2) => Number(prod1.price) - Number(prod2.price)
+    );
+    relatedProductsByPrice.push(
+      relatedProducts.find((prod) => product.price > prod.price)
+    );
+    relatedProducts.sort(
+      (prod1, prod2) => Number(prod2.price) - Number(prod1.price)
+    );
+    relatedProductsByPrice.push(
+      relatedProducts.find((prod) => product.price < prod.price)
+    );
+  } else {
+    relatedProductsByPrice.push(...relatedProducts);
+  }
 
   return (
     <>
@@ -74,10 +95,10 @@ const ProductCard = ({
       <h3 className="mb-5 text-xl font-semibold">
         Взгляните еще на эти товары:
       </h3>
-      {relatedProducts.length !== 0 ? (
+      {relatedProductsByPrice.length !== 0 ? (
         <div className="cart-item-wrap cursor-pointer border border-brand-bright-grey pt-5 pl-5 pr-5 xl:flex xl:gap-6 2xl:gap-6 ">
-          {relatedProducts.map((prod) => (
-            <Link href={prod?.permalink}>
+          {relatedProductsByPrice.map((prod) => (
+            <Link href={prod?.permalink} key={prod?.id}>
               <div className="cart-item-wrap mb-5 cursor-pointer border border-brand-bright-grey p-5 hover:bg-gray-100">
                 <div className="cart-left-col col-span-1 flex justify-start gap-10 xl:gap-5 ">
                   <figure className="ml-5 h-[100] w-[100] xl:ml-0 ">
@@ -99,7 +120,7 @@ const ProductCard = ({
                     <h3 className="cart-product-title text-brand-orange">
                       {prod?.name}
                     </h3>
-                    {prod?.description ? <p>{prod?.description}</p> : ''}
+                    {prod?.description ? <div dangerouslySetInnerHTML={{__html:sanitize(prod?.description)}}/> : ''}
                   </div>
                   <div className="text-lg font-semibold">{`Цена: ${Number(
                     prod.price
