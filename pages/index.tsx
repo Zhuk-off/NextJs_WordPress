@@ -12,6 +12,7 @@ import Products from '../components/products/products';
 import { IProduct } from '../interfaces/products.interface';
 import { IHeaderFooterContext } from '../interfaces/footerHeaderRestAPIDataResponse';
 import { getProductsData } from '../utils/products';
+import SectionSeparator from '../components/section-separator';
 
 export default function Index({
   allPosts: { edges },
@@ -44,7 +45,14 @@ export default function Index({
             />
           </Head>
           <Container>
+            <h3 className="mt-24 mb-12 !text-center text-6xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
+              Товары, которые ты можешь получить уже сегодня
+            </h3>
             <Products products={products} />
+            <SectionSeparator />
+            <h3 className="mt-24 mb-12 !text-center text-6xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
+              Мой блог - переживи эти эмоции вместе со мной!
+            </h3>
             <Intro />
             {heroPost && (
               <HeroPost
@@ -70,7 +78,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const products = await getProductsData();
 
   return {
-    props: { allPosts, preview, dataRest, products: products ?? {}},
+    props: { allPosts, preview, dataRest, products: products ?? {} },
     revalidate: 10,
   };
 };

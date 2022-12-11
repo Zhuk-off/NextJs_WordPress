@@ -6,7 +6,7 @@ import { Bag, User, Wishlist } from './icons';
 
 export default function Header() {
   const { data } = useContext(HeaderFooterContext);
-  const [cart, setCart]= useContext(CartContext);
+  const [cart, setCart] = useContext(CartContext);
 
   const { header } = data;
   const { headerMenuItems, siteDescription, siteTitle, siteLogoUrl, favicon } =
@@ -20,9 +20,14 @@ export default function Header() {
         </Link>
         .
       </h2>
-      <div className="flex justify-between mb-10">
+      <div className="mb-10 flex justify-between">
         {headerMenuItems && headerMenuItems.length ? (
-          <ul className="flex flex-wrap font-bold uppercase leading-10 tracking-wide transition-all delay-300 duration-300 ease-in-out ">
+          <ul
+            className="flex flex-wrap items-center 
+          text-xl font-bold leading-tight tracking-wide 
+          transition-all delay-300 duration-300 ease-in-out 
+          md:text-2xl md:tracking-tighter whitespace-nowrap"
+          >
             {headerMenuItems.map((menuItem) => (
               <li
                 key={menuItem?.ID}
@@ -36,7 +41,11 @@ export default function Header() {
             ))}
           </ul>
         ) : null}
-        <div className="flex">
+        <div
+          className="flex text-lg font-bold leading-tight tracking-wide
+        md:text-xl md:tracking-tighter
+        "
+        >
           <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-brand-orange">
             <User />
             Войти

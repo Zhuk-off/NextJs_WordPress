@@ -7,6 +7,7 @@ import { sanitize } from '../../utils/miscellaneous';
 import AddToCart from '../cart/addToCart';
 import Qty from '../cart/cart-elements/qty';
 import ImageMod from '../image';
+import SectionSeparator from '../section-separator';
 
 const ProductCard = ({
   product,
@@ -91,7 +92,7 @@ const ProductCard = ({
           <AddToCart product={product} />
         </div>
       </div>
-      <hr className="mt-28 mb-24 border-accent-2"></hr>
+      <SectionSeparator />
       <h3 className="mb-5 text-xl font-semibold">
         Взгляните еще на эти товары:
       </h3>
@@ -120,7 +121,15 @@ const ProductCard = ({
                     <h3 className="cart-product-title text-brand-orange">
                       {prod?.name}
                     </h3>
-                    {prod?.description ? <div dangerouslySetInnerHTML={{__html:sanitize(prod?.description)}}/> : ''}
+                    {prod?.description ? (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: sanitize(prod?.description),
+                        }}
+                      />
+                    ) : (
+                      ''
+                    )}
                   </div>
                   <div className="text-lg font-semibold">{`Цена: ${Number(
                     prod.price
