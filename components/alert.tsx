@@ -27,8 +27,9 @@ export default function Alert({ preview }) {
             <>
               The source code for this blog is{' '}
               <a
-                href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-                className="underline hover:text-success duration-200 transition-colors"
+                href={`https://github.com/Zhuk-off/NextJs_WordPress`}
+                className="underline hover:text-brand-orange duration-200 transition-colors"
+                target={'_blank'}
               >
                 available on GitHub
               </a>

@@ -26,7 +26,7 @@ export default function Header() {
             {headerMenuItems.map((menuItem) => (
               <li
                 key={menuItem?.ID}
-                className="px-3 transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
+                className="px-3 transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-brand-orange"
               >
                 <Link
                   href={menuItem?.url || '/'}
@@ -37,16 +37,16 @@ export default function Header() {
           </ul>
         ) : null}
         <div className="flex">
-          <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+          <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-brand-orange">
             <User />
             Войти
           </div>
-          <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+          <div className="flex cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-brand-orange">
             <Wishlist />
             Избранное
           </div>
           <Link href={'/cart'} className="h-full">
-            <div className="flex h-full cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105">
+            <div className="flex h-full cursor-pointer flex-col items-center px-3 font-semibold transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-brand-orange">
               <Bag className="mr-1 lg:mr-0" />
               <span className="ml-1">
                 Корзина{cart?.totalQty ? `(${cart?.totalQty})` : null}

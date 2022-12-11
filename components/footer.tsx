@@ -4,6 +4,57 @@ import { HeaderFooterContext } from '../context/headerFooterContext';
 import { sanitize } from '../utils/miscellaneous';
 import Link from 'next/link';
 
+const footerNav = {
+  Company: [
+    {
+      title: 'About Us',
+      href: '/#',
+    },
+    { title: 'Contact Us', href: '/#' },
+    { title: 'Newsroom', href: '/#' },
+    { title: 'FAQ', href: '/#' },
+  ],
+  'Job Seeker': [
+    {
+      title: 'Jobs by Specialisation',
+      href: '/#',
+    },
+    { title: 'Jobs by Location', href: '/#' },
+    { title: 'Jobs by Type', href: '/#' },
+    { title: 'Jobs by Experience Level', href: '/#' },
+    { title: 'Companies', href: '/#' },
+    { title: 'Advice', href: '/#' },
+  ],
+};
+
+// const SocialLinks = [
+//   {
+//     title: "Instagram",
+//     link: "https://instagram.com/",
+//     Icon: <InstagramIcon height={30} width={30} />,
+//   },
+//   {
+//     title: "Facebook",
+//     link: "https://facebook.com/",
+//     Icon: <FacebookIcon height={30} width={30} />,
+//   },
+//   {
+//     title: "Tiktok",
+//     link: "https://tiktok.com/",
+//     Icon: <TiktokIcon height={30} width={30} />,
+//   },
+//   {
+//     title: "LinkedIn",
+//     link: "https://linkedin.com/",
+//     Icon: <LinkedInIcon height={30} width={30} />,
+//   },
+//   {
+//     title: "Youtube",
+//     link: "https://youtube.com/",
+//     Icon: <YoutubeIcon height={30} width={30} />,
+//   },
+// ];
+
 import { getIconComponentByName } from '../lib/helpers';
 
 export default function Footer() {
@@ -16,9 +67,6 @@ export default function Footer() {
     sidebarTwo,
     socialLinks,
   } = footer || {};
-  // console.log('Footer Menu - ', footer);
-  // console.log(footerMenuItems.length);
-  // console.log(footerMenuItems);
 
   const [isMounted, setMount] = useState(false);
 
@@ -29,80 +77,87 @@ export default function Footer() {
   return (
     <footer className="border-t border-accent-2 bg-accent-1">
       <Container>
-        <div className="flex flex-col items-center py-28 lg:flex-row">
-          <h3 className="mb-10 text-center text-4xl font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
-            Statically Generated with Next.js.
-          </h3>
+        <div className="flex flex-col items-center pt-12 lg:flex-row">
+        <div className="mx-auto px-6 pt-16 sm:px-8">
+          <div className="xs:grid-cols-2 grid grid-cols-1 gap-y-6 gap-x-6 md:!grid-cols-4 md:gap-8">
+            <div className="xs:col-span-2  mb-4 flex flex-col">
+              <span className="text-xl font-bold capitalize">Blog.</span>
+              <p className="max-w-screen-xs mt-4 text-sm">
+                Блог и небольшой магазин товаров с корзиной и возможностью
+                заказать их
+              </p>
+            </div>
 
-          {isMounted ? (
-            <>
-              {/* Widget one */}
-              <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
-                <div
-                  dangerouslySetInnerHTML={{ __html: sanitize(sidebarOne) }}
-                />
-              </div>
+            {footerMenuItems.map(({ title, children }) => {
+              return (
+                <div key={title}>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {title}
+                  </h3>
+                  <ul className="mt-4 space-y-2">
+                    {children.map((child) => (
+                      <li key={child.title}>
+                        <Link
+                          href={child.url}
+                          className="transition-all duration-150 hover:text-brand-orange hover:underline"
+                        >
+                          {child.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
 
-              {/* Widget two */}
-              <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
-                <div
-                  dangerouslySetInnerHTML={{ __html: sanitize(sidebarTwo) }}
-                />
-              </div>
-            </>
-          ) : null}
+            {/* Social Links */}
+            <div className="flex flex-col space-y-2">
+              <h2 className="mb-4 text-xl font-semibold text-gray-900">
+                Я в социальных сетях
+              </h2>
+              {socialLinks && socialLinks.length ? (
+                <ul className="mb-3 flex flex-wrap p-2 font-bold tracking-wide transition-all delay-300 duration-300 ease-in-out ">
+                  {socialLinks.map((linkItem) => (
+                    <li
+                      key={linkItem?.iconName}
+                      className="mr-2 px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-orange-600"
+                    >
+                      <div className="flex-col ">
+                        <Link href={linkItem?.iconUrl || '/'} target="_blank">
+                          {getIconComponentByName(linkItem?.iconName, 70)}
 
-          {/* Footer Menus */}
-          <div className="my-1 w-full overflow-hidden px-1 sm:w-full lg:w-1/2 xl:w-1/3">
-            {footerMenuItems && footerMenuItems.length ? (
-              <ul className="mb-3 flex flex-wrap bg-[#c5c5c5] p-2 font-bold uppercase tracking-wide transition-all delay-300 duration-300 ease-in-out ">
-                {footerMenuItems.map((menuItem) => (
-                  <li
-                    key={menuItem?.ID}
-                    className="px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105"
-                  >
-                    <Link
-                      href={menuItem?.url || '/'}
-                      dangerouslySetInnerHTML={{ __html: menuItem.title }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-
-          {/* Social Links */}
-          <div className="w-full overflow-hidden sm:w-full lg:w-1/2 xl:w-1/3">
-            {socialLinks && socialLinks.length ? (
-              <ul className="mb-3 flex flex-wrap p-2 font-bold tracking-wide text-blue-500 transition-all delay-300 duration-300 ease-in-out ">
-                {socialLinks.map((linkItem) => (
-                  <li
-                    key={linkItem?.iconName}
-                    className="mr-2 px-3 transition delay-75 duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-blue-600"
-                  >
-                    <div className="flex-col ">
-                      <Link href={linkItem?.iconUrl || '/'} target="_blank">
-                        {getIconComponentByName(linkItem?.iconName, 70)}
-
-                        {linkItem.iconName}
-                      </Link>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+                          {linkItem.iconName}
+                        </Link>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           </div>
 
           {/* Copyright Text */}
           <div
-            className="w-full md:w-1/2 lg:w-1/4 "
-            dangerouslySetInnerHTML={{
-              __html:
-                copyrightText && typeof copyrightText === 'string'
-                  ? copyrightText
-                  : null,
-            }}
-          />
+            id="footer-copyright"
+            className="mt-2 border-t border-slate-200 py-4"
+          >
+            <Link
+              href={'https://github.com/Zhuk-off'}
+              className="font-semibold hover:text-brand-orange hover:underline"
+              target={'_blank'}
+            >
+              <div
+                className="text-center text-sm "
+                dangerouslySetInnerHTML={{
+                  __html:
+                    copyrightText && typeof copyrightText === 'string'
+                      ? copyrightText
+                      : null,
+                }}
+              />
+            </Link>
+          </div>
+        </div>
         </div>
       </Container>
     </footer>
