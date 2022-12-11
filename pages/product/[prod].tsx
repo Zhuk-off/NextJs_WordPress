@@ -1,18 +1,11 @@
 import { useRouter } from 'next/router';
-import ErrorPage from 'next/error';
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Container from '../../components/container';
-import PostBody from '../../components/post-body';
-import MoreStories from '../../components/more-stories';
-import PostHeader from '../../components/post-header';
 import SectionSeparator from '../../components/section-separator';
 import Layout from '../../components/layout';
 import PostTitle from '../../components/post-title';
-import Tags from '../../components/tags';
 import {
-  getAllPostsWithSlug,
-  getPostAndMorePosts,
   getFooterHeaderRestAPIData,
 } from '../../lib/api';
 import { CMS_NAME } from '../../lib/constants';
@@ -21,6 +14,8 @@ import { getProductsData } from '../../utils/products';
 import { IProduct } from '../../interfaces/products.interface';
 import { IHeaderFooterContext } from '../../interfaces/footerHeaderRestAPIDataResponse';
 import ProductCard from '../../components/products/productCard';
+import ErrorPage from 'next/error';
+
 
 export default function Post({
   dataRest,
@@ -36,9 +31,9 @@ export default function Post({
   );
   const { data } = dataRest;
 
-  // if (!router.isFallback && !post?.slug) {
-  //   return <ErrorPage statusCode={404} />;
-  // }
+  if (!router.isFallback && !product?.slug) {
+    return <ErrorPage statusCode={404} />;
+  }
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
@@ -56,13 +51,11 @@ export default function Post({
                   <meta property="og:image" content={product.images[0]?.src} />
                 </Head>
                 <ProductCard product={product} products={products} />
-                <footer>
-                  {/* {post.tags.edges.length > 0 && <Tags tags={post.tags} />} */}
-                </footer>
+
               </article>
 
               <SectionSeparator />
-              {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
+
             </>
           )}
         </Container>
@@ -82,7 +75,7 @@ export const getStaticProps: GetStaticProps = async () => {
       // post: data.post,
       // posts: data.posts,
       dataRest,
-      products,
+      products:products || [],
     },
     revalidate: 10,
   };
@@ -91,7 +84,7 @@ export const getStaticProps: GetStaticProps = async () => {
 export const getStaticPaths: GetStaticPaths = async () => {
   // const allPosts = await getAllPostsWithSlug();
   const products: IProduct[] = await getProductsData();
-  const prodPath = products.map((product) => product.permalink);
+  // const prodPath = products.map((product) => product.permalink);
 
   return {
     paths: products.map((product) => `/product/${product.slug}`) || [],

@@ -30,25 +30,33 @@ const ProductCard = ({
   const relatedProducts: IProduct[] = [];
   const relatedProductsByPrice: IProduct[] = [];
 
-  product.related_ids.forEach((ids) =>
+  product?.related_ids?.forEach((ids) =>
     relatedProducts.push(products.find((prod) => prod.id === ids))
   );
 
   /**
    * We get a more expensive and cheaper product for display in recommended goods
    */
+
   if (relatedProducts?.length > 2) {
     relatedProducts.sort(
-      (prod1, prod2) => Number(prod1.price) - Number(prod2.price)
+      (prod1, prod2) => Number(prod2?.price) - Number(prod1?.price)
     );
+
     relatedProductsByPrice.push(
-      relatedProducts.find((prod) => product.price > prod.price)
+      relatedProducts.find(
+        (prod) => Number(product?.price) > Number(prod?.price)
+      )
     );
+
     relatedProducts.sort(
-      (prod1, prod2) => Number(prod2.price) - Number(prod1.price)
+      (prod1, prod2) => Number(prod1?.price) - Number(prod2?.price)
     );
+
     relatedProductsByPrice.push(
-      relatedProducts.find((prod) => product.price < prod.price)
+      relatedProducts.find(
+        (prod) => Number(product?.price) < Number(prod?.price)
+      )
     );
   } else {
     relatedProductsByPrice.push(...relatedProducts);
@@ -77,7 +85,7 @@ const ProductCard = ({
           />
           <div className="mb-8 text-2xl font-bold">
             {`Всего: `}
-            {Number(product.price).toFixed(2)}
+            {Number(product?.price).toFixed(2)}
             {` `}
           </div>
 
@@ -98,46 +106,50 @@ const ProductCard = ({
       </h3>
       {relatedProductsByPrice.length !== 0 ? (
         <div className="cart-item-wrap cursor-pointer border border-brand-bright-grey pt-5 pl-5 pr-5 xl:flex xl:gap-6 2xl:gap-6 ">
-          {relatedProductsByPrice.map((prod) => (
-            <Link href={prod?.permalink} key={prod?.id}>
-              <div className="cart-item-wrap mb-5 cursor-pointer border border-brand-bright-grey p-5 hover:bg-gray-100">
-                <div className="cart-left-col col-span-1 flex justify-start gap-10 xl:gap-5 ">
-                  <figure className="ml-5 h-[100] w-[100] xl:ml-0 ">
-                    <ImageMod
-                      className="mb-2 overflow-hidden object-cover mix-blend-darken"
-                      width="100"
-                      height="100"
-                      alt={
-                        prod?.images[0]?.alt !== ''
-                          ? prod?.images[0]?.alt ?? ''
-                          : ''
-                      }
-                      src={
-                        prod?.images[0]?.src !== '' ? prod?.images[0]?.src : ''
-                      } // use normal <img> attributes as props
-                    />
-                  </figure>
-                  <div className="xl:max-w-xs 2xl:max-w-md ">
-                    <h3 className="cart-product-title text-brand-orange">
-                      {prod?.name}
-                    </h3>
-                    {prod?.description ? (
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: sanitize(prod?.description),
-                        }}
+          {relatedProductsByPrice.map((prod) =>
+            prod ? (
+              <Link href={prod?.permalink} key={prod?.id}>
+                <div className="cart-item-wrap mb-5 cursor-pointer border border-brand-bright-grey p-5 hover:bg-gray-100">
+                  <div className="cart-left-col col-span-1 flex justify-start gap-10 xl:gap-5 ">
+                    <figure className="ml-5 h-[100] w-[100] xl:ml-0 ">
+                      <ImageMod
+                        className="mb-2 overflow-hidden object-cover mix-blend-darken"
+                        width="100"
+                        height="100"
+                        alt={
+                          prod?.images[0]?.alt !== ''
+                            ? prod?.images[0]?.alt ?? ''
+                            : ''
+                        }
+                        src={
+                          prod?.images[0]?.src !== ''
+                            ? prod?.images[0]?.src
+                            : ''
+                        } // use normal <img> attributes as props
                       />
-                    ) : (
-                      ''
-                    )}
+                    </figure>
+                    <div className="xl:max-w-xs 2xl:max-w-md ">
+                      <h3 className="cart-product-title text-brand-orange">
+                        {prod?.name}
+                      </h3>
+                      {prod?.description ? (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: sanitize(prod?.description),
+                          }}
+                        />
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                    <div className="text-lg font-semibold">{`Цена: ${
+                      Number(prod?.price ?? '').toFixed(2) ?? ''
+                    } `}</div>
                   </div>
-                  <div className="text-lg font-semibold">{`Цена: ${Number(
-                    prod.price
-                  ).toFixed(2)} `}</div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ) : null
+          )}
         </div>
       ) : null}
     </>

@@ -74,8 +74,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts = await getAllPagesSlug();
 
+  const slug = allPosts.edges.map(({ node }) => `/${node.slug}`);
+  const slugWithFilter = slug.filter(
+    (slug) => slug !== '/cart' && slug !== '/checkout' && slug !== '/my-account'
+  );
+
+
+
   return {
-    paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
+    // paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
+    paths: slugWithFilter || [],
     fallback: true,
   };
 };
