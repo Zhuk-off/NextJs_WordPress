@@ -12,8 +12,9 @@ import {
   getPageByUri,
 } from '../lib/api';
 import { sanitize } from '../utils/miscellaneous';
+import { useEffect, useState } from 'react';
 
-const Checkout = ({
+const Page = ({
   dataRest,
   page,
 }: {
@@ -22,6 +23,12 @@ const Checkout = ({
 }) => {
   if (!dataRest) return null;
   const router = useRouter();
+
+  const [isMounted, setMount] = useState(false);
+
+  useEffect(() => {
+    setMount(true);
+  }, []);
 
   const { data } = dataRest;
 
@@ -35,17 +42,21 @@ const Checkout = ({
           <h1 className="mt-24 mb-12 text-center text-6xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
             {page.title}
           </h1>
-          <div
-            className="mb-20"
-            dangerouslySetInnerHTML={{ __html: sanitize(page.content) }}
-          ></div>
+          {isMounted ? (
+            <>
+              <div
+                className="mb-20"
+                dangerouslySetInnerHTML={{ __html: sanitize(page.content) }}
+              ></div>
+            </>
+          ) : null}
         </Container>
       </Layout>
     </HeaderFooterContext.Provider>
   );
 };
 
-export default Checkout;
+export default Page;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const dataRest = await getFooterHeaderRestAPIData();
