@@ -67,6 +67,47 @@ export async function getAllPostsWithSlug() {
   return data?.posts;
 }
 
+export async function getAllPagesSlug() {
+  const data = await fetchAPI(`
+  {
+    pages {
+      edges {
+        node {
+          slug
+        }
+      }
+    }
+  }
+  `);
+  return data?.pages;
+}
+
+export async function getPageByUri(uri) {
+  const data = await fetchAPI(`
+  query PageByUri($id: ID = "/contacts/", $idType: PageIdType = URI) {
+    page(id: $id, idType: $idType) {
+      id
+      title
+      slug
+      date
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+      uri
+      content
+    }
+  }
+  `,{
+    variables: {
+      id: uri,
+      idType: 'URI',
+    },
+  });
+  return data?.page;
+}
+
 export async function getAllPostsForHome(preview) {
   const data = await fetchAPI(
     `

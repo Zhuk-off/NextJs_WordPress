@@ -35,7 +35,6 @@ export default function Post({
     (product) => product.slug === router.query.prod
   );
   const { data } = dataRest;
-  console.log(product);
 
   // if (!router.isFallback && !post?.slug) {
   //   return <ErrorPage statusCode={404} />;
@@ -93,7 +92,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // const allPosts = await getAllPostsWithSlug();
   const products: IProduct[] = await getProductsData();
   const prodPath = products.map((product) => product.permalink);
-  console.log('prodPath - ', prodPath);
 
   return {
     paths: products.map((product) => `/product/${product.slug}`) || [],

@@ -66,7 +66,6 @@ export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
       }
     }
   }
-console.log('data ', data);
 
   return data;
 };
