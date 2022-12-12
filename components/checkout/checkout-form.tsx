@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import Link from 'next/link';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { CartContext } from '../../context/CartCounter';
 import { ICountriesData, IState } from '../../interfaces/countries.interface';
@@ -73,6 +74,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     useState<boolean>(false); // Loading state
   const [isOrderProcessing, setIsOrderProcessing] = useState<boolean>(false); // Loading when sending an order
   const [createdOrderData, setCreatedOrderData] = useState({}); // information about order
+  const [orderSend, setOrderSend] = useState<boolean>(false);
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -131,6 +133,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     }
 
     setRequestError(null); //If he has reached this moment, then this means that there is no error
+    setOrderSend(true) // To display the message "Your order is accepted"
   };
 
   const handleOnChange = async (
@@ -265,13 +268,35 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
               </div>
 
               {/* Checkout Loading*/}
-              {isOrderProcessing && <p>Processing Order...</p>}
+              {isOrderProcessing && (
+                <p>Заказ обрабатывается...̿' ̿'\̵͇̿̿\з=(◕_◕)=ε/̵͇̿̿/'̿'̿ ̿</p>
+              )}
               {requestError && (
                 <p>Error : {requestError} :( Please try again</p>
               )}
             </div>
           </div>
         </form>
+      ) : null}
+      {orderSend && !cart ? (
+        <>
+          <h2 className="mt-20 text-4xl font-semibold">Ваш заказ принят! </h2>
+          <p className="mb-50 mt-5 text-lg">
+            Наш менеджер в ближайшее время свяжется с вами для уточнения
+            деталей.{' '}
+          </p>
+
+          <div className="woo-next-place-order-btn-wrap mt-5">
+            <Link href="/">
+              <button className="mr-2 mb-28 rounded-lg bg-brand-orange px-5 py-2.5 text-center text-sm font-medium text-white duration-500 hover:bg-brand-royal-blue dark:focus:ring-yellow-900">
+                <span className="woo-next-cart-checkout-txt">
+                  Продолжить покупки
+                </span>
+                <i className="fas fa-long-arrow-alt-right" />
+              </button>
+            </Link>
+          </div>
+        </>
       ) : null}
     </>
   );

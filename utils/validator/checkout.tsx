@@ -55,19 +55,19 @@ const validateAndSanitizeCheckoutForm = (
      * Check for error and if there is no error then sanitize data.
      */
     if (!validator.isLength(data[fieldName], { min, max })) {
-      errors[fieldName] = `${errorContent} must be ${min} to ${max} characters`;
+      errors[fieldName] = `${errorContent} введите от ${min} до ${max} символов`;
     }
 
     if ('email' === type && !validator.isEmail(data[fieldName])) {
-      errors[fieldName] = `${errorContent} is not valid`;
+      errors[fieldName] = `${errorContent} не действителен`;
     }
 
     if ('phone' === type && !validator.isMobilePhone(data[fieldName])) {
-      errors[fieldName] = `${errorContent} is not valid`;
+      errors[fieldName] = `${errorContent} не действителен`;
     }
 
     if (required && validator.isEmpty(data[fieldName])) {
-      errors[fieldName] = `${errorContent} is required`;
+      errors[fieldName] = `${errorContent} отсутствует`;
     }
 
     // If no errors
@@ -81,30 +81,30 @@ const validateAndSanitizeCheckoutForm = (
     }
   };
 
-  addErrorAndSanitizedData('firstName', 'First name', 2, 35, 'string', true);
-  addErrorAndSanitizedData('lastName', 'Last name', 2, 35, 'string', true);
-  addErrorAndSanitizedData('company', 'Company Name', 0, 35, 'string', false);
-  addErrorAndSanitizedData('country', 'Country name', 2, 55, 'string', true);
+  addErrorAndSanitizedData('firstName', 'Имя', 2, 35, 'string', true);
+  addErrorAndSanitizedData('lastName', 'Фамилия', 2, 35, 'string', true);
+  addErrorAndSanitizedData('company', 'Название компании', 0, 35, 'string', false);
+  addErrorAndSanitizedData('country', 'Страну', 2, 55, 'string', true);
   addErrorAndSanitizedData(
     'address1',
-    'Street address line 1',
+    'Адрес',
     12,
     100,
     'string',
     true
   );
   addErrorAndSanitizedData('address2', '', 0, 254, 'string', false);
-  addErrorAndSanitizedData('city', 'City field', 3, 25, 'string', true);
+  addErrorAndSanitizedData('city', 'Город', 3, 25, 'string', true);
   addErrorAndSanitizedData(
     'state',
-    'State/County',
+    'Штат/Округ',
     0,
     254,
     'string',
     hasStates
   );
-  addErrorAndSanitizedData('postcode', 'Post code', 2, 10, 'postcode', true);
-  addErrorAndSanitizedData('phone', 'Phone number', 10, 15, 'phone', true);
+  addErrorAndSanitizedData('postcode', 'Индекс', 2, 10, 'postcode', true);
+  addErrorAndSanitizedData('phone', 'Телефон', 10, 15, 'phone', true);
   addErrorAndSanitizedData('email', 'Email', 11, 254, 'email', true);
 
   // The data.createAccount is a boolean value.
