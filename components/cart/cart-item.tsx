@@ -108,8 +108,6 @@ const CartItem = ({
     }
   };
 
-
-
   return (
     <div className="cart-item-wrap mb-5 grid grid-cols-3 gap-6 border border-brand-bright-grey p-5">
       <div className="cart-left-col col-span-1">
@@ -134,11 +132,26 @@ const CartItem = ({
             </div>
             <button
               className="cart-remove-item absolute right-0 top-0 
-              flex items-center 
-              border border-brand-bright-grey bg-transparent px-4 py-2 text-22px leading-22px "
+              flex h-[40px] w-[49px]
+              items-center justify-center
+              border border-brand-bright-grey bg-transparent text-22px leading-22px "
               onClick={(event) => handleRemoveProductClick(event, item?.key)}
             >
-              <span className="-translate-y-0.5">&times;</span>
+              {removingProduct ? (
+                <div className="block flex h-[35px] w-[35px] justify-center">
+                  <img
+                    className="woo-next-cart-item-spinner"
+                    width={35}
+                    height={35}
+                    src="/cart-spinner.gif"
+                    alt="spinner"
+                  />
+                </div>
+              ) : (
+                <div className="flex h-[22px] w-[15px] -translate-y-0.5 items-center justify-center px-4 py-2">
+                  &times;
+                </div>
+              )}
             </button>
           </div>
 
@@ -154,15 +167,6 @@ const CartItem = ({
                 )} ${currency}`}</span>
               </div>
             </div>
-            {updatingProductProcess ? (
-              <img
-                className="woo-next-cart-item-spinner"
-                width={40}
-                height={40}
-                src="/cart-spinner.gif"
-                alt="spinner"
-              />
-            ) : null}
 
             {/*Qty*/}
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -174,21 +178,33 @@ const CartItem = ({
               >
                 -
               </button>
-              <input
-                type="number"
-                min="1"
-                style={{
-                  textAlign: 'center',
-                  width: '50px',
-                  paddingRight: '0',
-                }}
-                // data-cart-key={item?.key}
-                className={`woo-next-cart-qty-input ml-3 ${
-                  updatingProductProcess ? 'disabled' : ''
-                } `}
-                value={productCount}
-                onChange={(event) => handleQtyChange(event, item?.key, '')}
-              />
+              {updatingProductProcess ? (
+                <div className="flex w-[62px] justify-center">
+                  <img
+                    className="woo-next-cart-item-spinner"
+                    width={36}
+                    height={36}
+                    src="/cart-spinner.gif"
+                    alt="spinner"
+                  />
+                </div>
+              ) : (
+                <input
+                  type="number"
+                  min="1"
+                  style={{
+                    textAlign: 'center',
+                    width: '50px',
+                    paddingRight: '0',
+                  }}
+                  data-cart-key={item?.key}
+                  className={`woo-next-cart-qty-input ml-3 ${
+                    updatingProductProcess ? 'disabled' : ''
+                  } `}
+                  value={productCount}
+                  onChange={(event) => handleQtyChange(event, item?.key, '')}
+                />
+              )}
               <button
                 className="increment-btn text-20px"
                 onClick={(event) =>
