@@ -13,6 +13,11 @@ import {
 } from '../lib/api';
 import { sanitize } from '../utils/miscellaneous';
 import { useEffect, useState } from 'react';
+import PostTitle from '../components/post-title';
+import Head from 'next/head';
+import PostHeader from '../components/post-header';
+import PostBody from '../components/post-body';
+import { CMS_NAME } from '../lib/constants';
 
 const Page = ({
   dataRest,
@@ -39,17 +44,29 @@ const Page = ({
     <HeaderFooterContext.Provider value={{ data }}>
       <Layout>
         <Container>
-          <h1 className="mt-24 mb-12 text-center text-6xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
-            {page.title}
-          </h1>
-          {isMounted ? (
+          {router.isFallback ? (
+            <PostTitle>Loading…</PostTitle>
+          ) : (
             <>
-              <div
-                className="mb-20"
-                dangerouslySetInnerHTML={{ __html: sanitize(page.content) }}
-              ></div>
+              <article>
+                <Head>
+                  <title>
+                    {page.title} | Next.js Blog Example with {CMS_NAME}
+                  </title>
+                  <meta
+                    property="og:image"
+                    content={page.featuredImage?.node.sourceUrl}
+                  />
+                </Head>
+                <PostHeader
+                  title={page.title}
+                  coverImage={page.featuredImage}
+                  date={page.date}
+                />
+                <PostBody content={page.content} />
+              </article>
             </>
-          ) : null}
+          )}
         </Container>
       </Layout>
     </HeaderFooterContext.Provider>
@@ -78,8 +95,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const slugWithFilter = slug.filter(
     (slug) => slug !== '/cart' && slug !== '/checkout' && slug !== '/my-account'
   );
-
-
 
   return {
     // paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],

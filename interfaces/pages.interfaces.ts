@@ -3,7 +3,13 @@ export interface IPageResponse {
   title: string;
   slug: string;
   date: string;
-  featuredImage: string | null;
+  featuredImage: INode | null;
   uri: string;
   content: string;
+}
+
+interface INode {
+  node: {
+    sourceUrl: string;
+  };
 }

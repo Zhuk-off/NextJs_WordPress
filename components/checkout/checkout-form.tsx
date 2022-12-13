@@ -141,6 +141,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     isSipping: boolean = false,
     isBillingOrShipping: boolean = false
   ): Promise<void> => {
+    
     const { target } = event || {};
     if ('createAccount' === target.name) {
       handleCreateAccount(input, setInput, target);

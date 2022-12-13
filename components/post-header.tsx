@@ -4,33 +4,43 @@ import CoverImage from './cover-image';
 import PostTitle from './post-title';
 import Categories from './categories';
 
+interface IPostHeader {
+  title: string;
+  coverImage: any;
+  date: string;
+  author?: any;
+  categories?: any;
+}
+
 export default function PostHeader({
-    title,
-    coverImage,
-    date,
-    author,
-    categories,
-}) {
-    return (
-        <>
-            <PostTitle>{title}</PostTitle>
-            <div className="hidden md:block md:mb-12">
-                <Avatar author={author} />
-            </div>
-            {coverImage && (
-                <div className="mb-8 md:mb-16 sm:mx-0">
-                    <CoverImage title={title} coverImage={coverImage} />
-                </div>
-            )}
-            <div className="max-w-2xl mx-auto">
-                <div className="block md:hidden mb-6">
-                    <Avatar author={author} />
-                </div>
-                <div className="mb-6 text-lg">
-                    Posted <Date dateString={date} />
-                    <Categories categories={categories} />
-                </div>
-            </div>
-        </>
-    );
+  title,
+  coverImage,
+  date,
+  author,
+  categories,
+}: IPostHeader) {
+  return (
+    <>
+      <PostTitle>{title}</PostTitle>
+      <div className="hidden md:mb-12 md:block">
+        {author ? <Avatar author={author} /> : null}
+      </div>
+      {coverImage && (
+        <div className="mb-8 sm:mx-0 md:mb-16">
+          <CoverImage title={title} coverImage={coverImage} />
+        </div>
+      )}
+      {author && categories ? (
+        <div className="mx-auto max-w-2xl">
+          <div className="mb-6 block md:hidden">
+            <Avatar author={author} />
+          </div>
+          <div className="mb-6 text-lg">
+            Posted <Date dateString={date} />
+            <Categories categories={categories} />
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
 }
