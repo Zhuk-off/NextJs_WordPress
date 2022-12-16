@@ -40,9 +40,10 @@ const Page = ({
   if (!router.isFallback && !page?.slug) {
     return <ErrorPage statusCode={404} />;
   }
+  
   return (
     <HeaderFooterContext.Provider value={{ data }}>
-      <Layout>
+      <Layout page={page}>
         <Container>
           {router.isFallback ? (
             <PostTitle>Loading…</PostTitle>

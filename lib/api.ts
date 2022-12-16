@@ -83,8 +83,9 @@ export async function getAllPagesSlug() {
 }
 
 export async function getPageByUri(uri) {
-  const data = await fetchAPI(`
-  query PageByUri($id: ID = "/contacts/", $idType: PageIdType = URI) {
+  const data = await fetchAPI(
+    `
+  query PageByUri($id: ID = "/", $idType: PageIdType = URI) {
     page(id: $id, idType: $idType) {
       id
       title
@@ -97,14 +98,44 @@ export async function getPageByUri(uri) {
       }
       uri
       content
+      seo{
+        ...SeoFragment
+      }
     }
   }
-  `,{
-    variables: {
-      id: uri,
-      idType: 'URI',
-    },
-  });
+  fragment SeoFragment on PostTypeSEO {
+    breadcrumbs {
+      text
+      url
+    }
+    title
+    metaDesc
+    metaRobotsNoindex
+    metaRobotsNofollow
+    opengraphAuthor
+    opengraphDescription
+    opengraphTitle
+    schemaDetails
+    opengraphImage {
+      sourceUrl
+    }
+    opengraphSiteName
+    opengraphPublishedTime
+    opengraphModifiedTime
+    twitterTitle
+    twitterDescription
+    twitterImage {
+      sourceUrl
+    }
+}
+  `,
+    {
+      variables: {
+        id: uri,
+        idType: 'URI',
+      },
+    }
+  );
   return data?.page;
 }
 
@@ -161,6 +192,31 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
   const isRevision = isSamePost && postPreview?.status === 'publish';
   const data = await fetchAPI(
     `
+    fragment SeoFragment on PostTypeSEO {
+      breadcrumbs {
+        text
+        url
+      }
+      title
+      metaDesc
+      metaRobotsNoindex
+      metaRobotsNofollow
+      opengraphAuthor
+      opengraphDescription
+      opengraphTitle
+      schemaDetails
+      opengraphImage {
+        sourceUrl
+      }
+      opengraphSiteName
+      opengraphPublishedTime
+      opengraphModifiedTime
+      twitterTitle
+      twitterDescription
+      twitterImage {
+        sourceUrl
+      }
+    }
     fragment AuthorFields on User {
       name
       firstName
@@ -203,6 +259,9 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       post(id: $id, idType: $idType) {
         ...PostFields
         content
+        seo {
+          ...SeoFragment
+        }
         ${
           // Only some of the fields of a revision are considered as there are some inconsistencies
           isRevision
@@ -213,6 +272,9 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
               title
               excerpt
               content
+              seo {
+                ...SeoFragment
+              }
               author {
                 node {
                   ...AuthorFields

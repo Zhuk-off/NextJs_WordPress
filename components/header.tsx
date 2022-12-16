@@ -20,7 +20,7 @@ export default function Header() {
         </Link>
         .
       </h2>
-      <div className="mb-10 flex justify-between">
+      <nav className="mb-10 flex justify-between">
         {headerMenuItems && headerMenuItems.length ? (
           <ul
             className="flex flex-wrap items-center 
@@ -31,7 +31,10 @@ export default function Header() {
             {headerMenuItems.map((menuItem) => (
               <li
                 key={menuItem?.ID}
-                className="px-3 transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-105 hover:text-brand-orange"
+                className="px-3 transition duration-200 ease-in-out 
+                hover:-translate-y-1 hover:scale-105 hover:text-brand-orange
+                vertical
+                "
               >
                 <Link
                   href={menuItem?.url || '/'}
@@ -63,7 +66,7 @@ export default function Header() {
             </div>
           </Link>
         </div>
-      </div>
+      </nav>
     </>
   );
 }

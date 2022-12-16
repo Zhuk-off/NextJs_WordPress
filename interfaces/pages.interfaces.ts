@@ -1,3 +1,5 @@
+import { ISeoRes } from './seo.interfaces';
+
 export interface IPageResponse {
   id: string;
   title: string;
@@ -6,6 +8,7 @@ export interface IPageResponse {
   featuredImage: INode | null;
   uri: string;
   content: string;
+  seo?: ISeoRes;
 }
 
 interface INode {
