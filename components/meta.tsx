@@ -3,7 +3,6 @@ import { CMS_NAME, HOME_OG_IMAGE_URL } from '../lib/constants';
 import { sanitize } from '../utils/miscellaneous';
 
 export default function Meta({page}) {
-  // console.log('page', page);
   
   return (
     <Head>

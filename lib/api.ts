@@ -17,7 +17,7 @@ async function fetchAPI(query = '', { variables }: Record<string, any> = {}) {
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
-  // WPGraphQL Plugin must be enabled
+  // WPGraphQL Plugin, Add WPGraphQL SEO Plugin, must be enabled 
   const res = await fetch(API_URL, {
     headers,
     method: 'POST',
@@ -29,7 +29,7 @@ async function fetchAPI(query = '', { variables }: Record<string, any> = {}) {
 
   const json = await res.json();
   if (json.errors) {
-    // console.error(json.errors);
+    console.error(json.errors);
     throw new Error('Failed to fetch API');
   }
   return json.data;

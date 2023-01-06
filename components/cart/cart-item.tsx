@@ -128,7 +128,7 @@ const CartItem = ({
               <h3 className="cart-product-title text-brand-orange">
                 {item?.data?.name}
               </h3>
-              {item?.data?.description ? <p>{item?.data?.description}</p> : ''}
+              {item?.data?.short_description ? <p>{item?.data?.short_description}</p> : ''}
             </div>
             <button
               className="cart-remove-item absolute right-0 top-0 

@@ -15,7 +15,6 @@ interface ILayout {
 }
 
 export default function Layout({ preview = false, page, children }:ILayout) {
-  // console.log('layout seo', page);
 
   // if (!page) {
   //   return null

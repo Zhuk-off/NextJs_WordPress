@@ -110,9 +110,10 @@ export default function Footer() {
               );
             })}
 
+          </div>
             {/* Social Links */}
-            <div className="flex flex-col space-y-2">
-              <h2 className="mb-4 text-xl font-semibold text-gray-900">
+            <div className="flex flex-col space-y-2 mt-5">
+              <h2 className="text-xl font-semibold text-gray-900">
                 Я в социальных сетях
               </h2>
               {socialLinks && socialLinks.length ? (
@@ -134,7 +135,6 @@ export default function Footer() {
                 </ul>
               ) : null}
             </div>
-          </div>
 
           {/* Copyright Text */}
           <div

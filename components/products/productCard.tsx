@@ -73,6 +73,7 @@ const ProductCard = ({
               height="300"
               alt={productImg !== '' ? productImg?.alt ?? '' : ''}
               src={productImg !== '' ? productImg?.src : ''} // use normal <img> attributes as props
+              priority
             />
           </figure>
         </div>
@@ -83,6 +84,17 @@ const ProductCard = ({
               __html: sanitize(product?.short_description ?? ''),
             }}
           />
+                 <div className='max-w-screen-sm mb-10'>{product?.description ? 
+        <>
+            <h2 className="mb-8 text-xl font-semibold">Описание:</h2>
+                    <div
+                    className="mb-8"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitize(product?.description ?? ''),
+                    }}
+                  />
+        </>
+        : ''}</div>
           <div className="mb-8 text-2xl font-bold">
             {`Всего: `}
             {Number(product?.price).toFixed(2)}
@@ -98,6 +110,7 @@ const ProductCard = ({
           ) : null}
 
           <AddToCart product={product} />
+ 
         </div>
       </div>
       <SectionSeparator />
@@ -132,6 +145,7 @@ const ProductCard = ({
                       <h3 className="cart-product-title text-brand-orange">
                         {prod?.name}
                       </h3>
+
                       {prod?.description ? (
                         <div
                           dangerouslySetInnerHTML={{

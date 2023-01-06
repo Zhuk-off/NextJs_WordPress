@@ -20,13 +20,13 @@ export default function Header() {
         </Link>
         .
       </h2>
-      <nav className="mb-10 flex justify-between">
+      <nav className="mb-10 flex flex-col justify-between md:flex-row">
         {headerMenuItems && headerMenuItems.length ? (
           <ul
-            className="flex flex-wrap items-center 
+            className="flex flex-wrap items-center mb-3
           text-xl font-bold leading-tight tracking-wide 
           transition-all delay-300 duration-300 ease-in-out 
-          md:text-2xl md:tracking-tighter whitespace-nowrap"
+          md:text-2xl md:tracking-tighter whitespace-nowrap md:mb-0"
           >
             {headerMenuItems.map((menuItem) => (
               <li

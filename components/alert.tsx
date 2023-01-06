@@ -25,13 +25,13 @@ export default function Alert({ preview }) {
             </>
           ) : (
             <>
-              The source code for this blog is{' '}
+              Сайт не является действующим интернет магазином. Все товары вымышленные и представлены для образца. Исходный код можно найти здесь{' '}
               <a
                 href={`https://github.com/Zhuk-off/NextJs_WordPress`}
                 className="underline hover:text-brand-orange duration-200 transition-colors"
                 target={'_blank'}
               >
-                available on GitHub
+                GitHub
               </a>
               .
             </>

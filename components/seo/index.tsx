@@ -14,7 +14,6 @@ import { ISeoRes } from '../../interfaces/seo.interfaces';
  *
  */
 const Seo = ({ seo, uri }: { seo: ISeoRes; uri: string }) => {
-  // console.log('seo, uri',seo, uri);
   if (!seo) {
     return;
   }
@@ -28,7 +27,6 @@ const Seo = ({ seo, uri }: { seo: ISeoRes; uri: string }) => {
     opengraphImage = { sourceUrl: '' },
     opengraphSiteName = '',
   } = seo;
-  // console.log('seo', seo);
 
   // window.location.origin - get the address of the current page
   const currentLocation =
