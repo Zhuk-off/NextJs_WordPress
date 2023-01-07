@@ -10,13 +10,17 @@ const API_URL = process.env.WORDPRESS_API_URL;
 
 async function fetchAPI(query = '', { variables }: Record<string, any> = {}) {
   const headers = { 'Content-Type': 'application/json' };
-
+  
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
     headers[
       'Authorization'
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
-
+  
+  // console.log('headers', headers);
+  // console.log('query', query);
+  // console.log('variables', variables);
+  // console.log('API_URL', API_URL);
   // WPGraphQL Plugin, Add WPGraphQL SEO Plugin, must be enabled 
   const res = await fetch(API_URL, {
     headers,
@@ -26,6 +30,7 @@ async function fetchAPI(query = '', { variables }: Record<string, any> = {}) {
       variables,
     }),
   });
+// console.log('res', res);
 
   const json = await res.json();
   if (json.errors) {
@@ -325,6 +330,11 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
 // Get footer and header data from the plugin Headless CMS (Rest  API)
 export async function getFooterHeaderRestAPIData() {
   const { data } = await axios.get(FOOTER_HEADER_ENDPOINT);
+  // console.log(
+  //   'FOOTER_HEADER_ENDPOINT',FOOTER_HEADER_ENDPOINT , data
+
+
+  // );
   const dataRestModify = modifyUrlBackendToFrontend(data);
   return dataRestModify;
 }

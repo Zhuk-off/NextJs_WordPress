@@ -12,8 +12,9 @@ import { FRONTEND_SITE_URL } from './constants';
  * When creating a post, an error occurs in WordPress. */
 
 export const modifyUrlBackendToFrontend = (data: object): object => {
+  // console.log('modifyUrlBackendToFrontend start', data);
   modifyUrl(data);
-
+  
   function modifyUrl(data: object) {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -26,7 +27,8 @@ export const modifyUrlBackendToFrontend = (data: object): object => {
             if (typeof element === 'string') {
               const elementReplaced = element.replace(
                 process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
-                FRONTEND_SITE_URL
+                // process.env.NEXT_PUBLIC_SITE_URL
+                ''
               );
               data[key] = elementReplaced;
             }
@@ -35,11 +37,13 @@ export const modifyUrlBackendToFrontend = (data: object): object => {
       }
     }
   }
-
+  
+  // console.log('modifyUrlBackendToFrontend end', data);
   return data;
 };
 
 export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
+  // console.log('modifyUrlBackendToFrontendWC start', data);
   data.forEach((elem) => {
     modifyUrlWCResponse(elem);
   });
@@ -56,8 +60,8 @@ export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
             if (typeof element === 'string') {
               const elementReplaced = element.replace(
                 process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
-                FRONTEND_SITE_URL
-                // ''
+                // FRONTEND_SITE_URL
+                ''
               );
               data[key] = elementReplaced;
             }
@@ -67,6 +71,7 @@ export const modifyUrlBackendToFrontendWC = (data: IProduct[]): IProduct[] => {
     }
   }
 
+  // console.log('modifyUrlBackendToFrontendWC end', data);
   return data;
 };
 

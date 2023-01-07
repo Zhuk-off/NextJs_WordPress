@@ -128,7 +128,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     );
 
     if (createdOrderData.paymentUrl) {
-      console.log('hey', createdOrderData);
+      // console.log('hey', createdOrderData);
       // window.location.href = createdOrderData.paymentUrl;
     }
 

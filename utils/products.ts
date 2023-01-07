@@ -16,6 +16,8 @@ const api = new WooCommerceRestApi({
  */
 
 export const getProductsData = async (perPage?) => {
+  // console.log('process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL --- ', process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL);
+  
   const { data } = await api.get('products', {
     per_page: perPage || 50,
   });

@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({
 }) => {
   const data = await getPostAndMorePosts(params?.slug, preview, previewData);
   const dataRest = await getFooterHeaderRestAPIData();
-  console.log('params', params);
+  // console.log('params', params);
 
   return {
     props: {

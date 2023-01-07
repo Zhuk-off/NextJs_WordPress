@@ -36,6 +36,8 @@ export default function Index({
   const morePosts = edges.slice(1);
   const { data } = dataRest;
   const { siteTitle, favicon } = data.header;
+// console.log('products',products);
+// console.log('mainPage',mainPage);
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
