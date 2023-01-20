@@ -40,6 +40,7 @@ const Page = ({
   if (!router.isFallback && !page?.slug) {
     return <ErrorPage statusCode={404} />;
   }
+  // console.log('page', page);
   
   return (
     <HeaderFooterContext.Provider value={{ data }}>

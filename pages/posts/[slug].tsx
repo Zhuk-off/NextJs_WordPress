@@ -18,11 +18,14 @@ import {
 import { CMS_NAME } from '../../lib/constants';
 import { HeaderFooterContext } from '../../context/headerFooterContext';
 
+
+
 export default function Post({ post, posts, preview, dataRest }) {
   if (!dataRest) return null;
   const router = useRouter();
   const morePosts = posts?.edges;
   const { data } = dataRest;
+  // console.log('post', post);
 
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -30,7 +33,7 @@ export default function Post({ post, posts, preview, dataRest }) {
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
-      <Layout preview={preview}>
+      <Layout preview={preview} page={post}>
         <Container>
           {router.isFallback ? (
             <PostTitle>Loading…</PostTitle>
@@ -47,11 +50,12 @@ export default function Post({ post, posts, preview, dataRest }) {
                   />
                 </Head>
                 <PostHeader
-                  title={post.title}
-                  coverImage={post.featuredImage}
-                  date={post.date}
-                  author={post.author}
-                  categories={post.categories}
+                  title={post?.title}
+                  coverImage={post?.featuredImage}
+                  date={post?.date}
+                  author={post?.author}
+                  categories={post?.categories}
+                  timeToRead={post?.seo?.readingTime}
                 />
                 <PostBody content={post.content} />
                 <footer>

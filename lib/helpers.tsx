@@ -5,6 +5,7 @@ import {
   IShippingCountry,
 } from '../interfaces/countries.interface';
 import { IProduct } from '../interfaces/products.interface';
+import { ISeoRes } from '../interfaces/seo.interfaces';
 import { FRONTEND_SITE_URL } from './constants';
 
 /** Use to modify page URLs from backend to frontend.

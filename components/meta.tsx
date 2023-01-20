@@ -2,18 +2,19 @@ import Head from 'next/head';
 import { CMS_NAME, HOME_OG_IMAGE_URL } from '../lib/constants';
 import { sanitize } from '../utils/miscellaneous';
 
-export default function Meta({page}) {
-  
+export default function Meta({ schemaDetails }) {
+  // console.log('schemaDetails ',schemaDetails);
+
   return (
     <Head>
-      	{page?.seo?.schemaDetails && (
-					<script
-						type='application/ld+json'
-						className='yoast-schema-graph'
-						key='yoastSchema'
-						dangerouslySetInnerHTML={{ __html: sanitize(page.seo.schemaDetails) }}
-					/>
-				)}
+      {schemaDetails && (
+        <script
+          type="application/ld+json"
+          className="yoast-schema-graph"
+          key="yoastSchema"
+          dangerouslySetInnerHTML={{ __html: sanitize(schemaDetails) }}
+        />
+      )}
       {/* <link
         rel="apple-touch-icon"
         sizes="180x180"

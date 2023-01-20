@@ -1,4 +1,5 @@
 import { ILinksWooResponse } from './ordersWoo.interfaces';
+import { IYoastHeadJson } from './seo.interfaces';
 
 export interface IProduct {
   id: number;
@@ -67,6 +68,8 @@ export interface IProduct {
   grouped_products: number[];
   menu_order: number;
   meta_data: IMetaDataProps[];
+  yoast_head?: string;
+  yoast_head_json?: IYoastHeadJson;
 
   has_options: boolean;
   _links: ILinksWooResponse;

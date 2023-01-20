@@ -5,9 +5,7 @@ import Container from '../../components/container';
 import SectionSeparator from '../../components/section-separator';
 import Layout from '../../components/layout';
 import PostTitle from '../../components/post-title';
-import {
-  getFooterHeaderRestAPIData,
-} from '../../lib/api';
+import { getFooterHeaderRestAPIData } from '../../lib/api';
 import { CMS_NAME } from '../../lib/constants';
 import { HeaderFooterContext } from '../../context/headerFooterContext';
 import { getProductsData } from '../../utils/products';
@@ -15,7 +13,6 @@ import { IProduct } from '../../interfaces/products.interface';
 import { IHeaderFooterContext } from '../../interfaces/footerHeaderRestAPIDataResponse';
 import ProductCard from '../../components/products/productCard';
 import ErrorPage from 'next/error';
-
 
 export default function Post({
   dataRest,
@@ -30,6 +27,7 @@ export default function Post({
     (product) => product.slug === router.query.prod
   );
   const { data } = dataRest;
+  // console.log('product', product);
 
   if (!router.isFallback && !product?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -37,7 +35,7 @@ export default function Post({
 
   return (
     <HeaderFooterContext.Provider value={{ data }}>
-      <Layout>
+      <Layout product={product}>
         <Container>
           {router.isFallback ? (
             <PostTitle>Loading…</PostTitle>
@@ -51,11 +49,9 @@ export default function Post({
                   <meta property="og:image" content={product.images[0]?.src} />
                 </Head>
                 <ProductCard product={product} products={products} />
-
               </article>
 
               <SectionSeparator />
-
             </>
           )}
         </Container>
@@ -75,7 +71,7 @@ export const getStaticProps: GetStaticProps = async () => {
       // post: data.post,
       // posts: data.posts,
       dataRest,
-      products:products || [],
+      products: products || [],
     },
     revalidate: 10,
   };

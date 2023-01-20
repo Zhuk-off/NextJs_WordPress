@@ -87,6 +87,8 @@ export async function getAllPagesSlug() {
   return data?.pages;
 }
 
+
+
 export async function getPageByUri(uri) {
   const data = await fetchAPI(
     `
@@ -212,6 +214,8 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       schemaDetails
       opengraphImage {
         sourceUrl
+        altText
+        title
       }
       opengraphSiteName
       opengraphPublishedTime
@@ -220,8 +224,19 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       twitterDescription
       twitterImage {
         sourceUrl
+        title
       }
+      opengraphType
+      opengraphUrl
+      readingTime
+      opengraphPublisher
+      metaKeywords
+      canonical
+      cornerstone
+      focuskw
     }
+
+
     fragment AuthorFields on User {
       name
       firstName
@@ -264,6 +279,7 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       post(id: $id, idType: $idType) {
         ...PostFields
         content
+        uri
         seo {
           ...SeoFragment
         }
@@ -277,6 +293,7 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
               title
               excerpt
               content
+              uri
               seo {
                 ...SeoFragment
               }

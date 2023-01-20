@@ -10,6 +10,7 @@ interface IPostHeader {
   date: string;
   author?: any;
   categories?: any;
+  timeToRead?: number;
 }
 
 export default function PostHeader({
@@ -18,6 +19,7 @@ export default function PostHeader({
   date,
   author,
   categories,
+  timeToRead,
 }: IPostHeader) {
   return (
     <>
@@ -35,9 +37,10 @@ export default function PostHeader({
           <div className="mb-6 block md:hidden">
             <Avatar author={author} />
           </div>
-          <div className="mb-6 text-lg">
-            Posted <Date dateString={date} />
-            <Categories categories={categories} />
+          <div className="mb-6 font-light text-gray-400">
+            Опубликовано <Date dateString={date} />
+            <Categories categories={categories} /> Время прочтения около{' '}
+            {timeToRead} мин.
           </div>
         </div>
       ) : null}
