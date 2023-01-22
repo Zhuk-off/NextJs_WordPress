@@ -1,0 +1,8 @@
+# Block crawlers
+User-agent: *
+Disallow: /checkout/
+Disallow: /cart/
+
+# Allow all crawlers
+User-agent: *
+Allow: /

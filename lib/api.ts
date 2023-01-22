@@ -125,6 +125,8 @@ export async function getPageByUri(uri) {
     schemaDetails
     opengraphImage {
       sourceUrl
+      altText
+      title
     }
     opengraphSiteName
     opengraphPublishedTime
@@ -133,7 +135,16 @@ export async function getPageByUri(uri) {
     twitterDescription
     twitterImage {
       sourceUrl
+      title
     }
+    opengraphType
+    opengraphUrl
+    readingTime
+    opengraphPublisher
+    metaKeywords
+    canonical
+    cornerstone
+    focuskw
 }
   `,
     {
