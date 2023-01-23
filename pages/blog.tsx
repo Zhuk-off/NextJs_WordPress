@@ -30,7 +30,7 @@ export default function BlogPage({
         <Layout preview={preview}>
           <Head>
             <title>
-              {siteTitle || `Next.js Blog Example with ${CMS_NAME}`}
+              {siteTitle}
             </title>
             <link
               rel="shortcut icon"

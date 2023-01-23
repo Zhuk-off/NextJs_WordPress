@@ -18,6 +18,7 @@ import Head from 'next/head';
 import PostHeader from '../components/post-header';
 import PostBody from '../components/post-body';
 import { CMS_NAME } from '../lib/constants';
+import { filterSlugPages } from '../lib/helpers';
 
 const Page = ({
   dataRest,
@@ -41,7 +42,6 @@ const Page = ({
     return <ErrorPage statusCode={404} />;
   }
   // console.log('page', page);
-  
   return (
     <HeaderFooterContext.Provider value={{ data }}>
       <Layout page={page}>
@@ -52,9 +52,7 @@ const Page = ({
             <>
               <article>
                 <Head>
-                  <title>
-                    {page.title} | Next.js Blog Example with {CMS_NAME}
-                  </title>
+                  <title>{page.title}</title>
                   <meta
                     property="og:image"
                     content={page.featuredImage?.node.sourceUrl}
@@ -94,9 +92,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts = await getAllPagesSlug();
 
   const slug = allPosts.edges.map(({ node }) => `/${node.slug}`);
-  const slugWithFilter = slug.filter(
-    (slug) => slug !== '/cart' && slug !== '/checkout' && slug !== '/my-account'
-  );
+  const slugWithFilter = filterSlugPages(slug);
+  // console.log(slugWithFilter);
 
   return {
     // paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],

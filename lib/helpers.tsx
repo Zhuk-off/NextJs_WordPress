@@ -15,7 +15,7 @@ import { FRONTEND_SITE_URL } from './constants';
 export const modifyUrlBackendToFrontend = (data: object): object => {
   // console.log('modifyUrlBackendToFrontend start', data);
   modifyUrl(data);
-  
+
   function modifyUrl(data: object) {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -38,7 +38,7 @@ export const modifyUrlBackendToFrontend = (data: object): object => {
       }
     }
   }
-  
+
   // console.log('modifyUrlBackendToFrontend end', data);
   return data;
 };
@@ -119,4 +119,30 @@ function SortCountries(country1: IShippingCountry, country2: IShippingCountry) {
     return 1;
   }
   return 0;
+}
+
+export function filterSlugPages(slugs) {
+  let slugWithFilter = null;
+  if (Array.isArray(slugs)) {
+    // для путей страниц
+    slugWithFilter = slugs.filter(
+      (slug) =>
+        slug !== '/cart' &&
+        slug !== '/checkout' &&
+        slug !== '/my-account' &&
+        slug !== '/glavnaya'
+    );
+  } else {
+    if (slugs) {
+      // для siteMap
+      slugWithFilter =
+        slugs !== '/cart' &&
+        slugs !== '/checkout' &&
+        slugs !== '/my-account' &&
+        slugs !== '/glavnaya'
+          ? slugs
+          : null;
+    }
+  }
+  return slugWithFilter;
 }

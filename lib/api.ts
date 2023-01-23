@@ -64,6 +64,7 @@ export async function getAllPostsWithSlug() {
         edges {
           node {
             slug
+            modified
           }
         }
       }
@@ -79,6 +80,7 @@ export async function getAllPagesSlug() {
       edges {
         node {
           slug
+          modified
         }
       }
     }
@@ -98,6 +100,7 @@ export async function getPageByUri(uri) {
       title
       slug
       date
+      modified
       featuredImage {
         node {
           sourceUrl
@@ -168,6 +171,7 @@ export async function getAllPostsForHome(preview) {
             excerpt
             slug
             date
+            modified
             featuredImage {
               node {
                 sourceUrl
@@ -261,6 +265,7 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       excerpt
       slug
       date
+      modified
       featuredImage {
         node {
           sourceUrl

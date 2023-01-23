@@ -26,7 +26,7 @@ export default function ProductsPage({
         <Layout>
           <Head>
             <title>
-              {siteTitle || `Next.js Blog Example with ${CMS_NAME}`}
+              {siteTitle}
             </title>
             <link
               rel="shortcut icon"

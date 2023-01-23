@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "svg": "svgr -d components/icons assets/icons/svgs"
@@ -19,6 +20,7 @@
     "dompurify": "^2.4.1",
     "next": "latest",
     "next-seo": "^5.15.0",
+    "next-sitemap": "^3.1.47",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-yandex-metrika": "^2.6.0",

@@ -28,6 +28,9 @@ export default function Post({
   );
   const { data } = dataRest;
   // console.log('product', product);
+  // console.log('Date.parse', new Date(Date.parse( product.date_modified)).toISOString());
+  // console.log('new Date()', new Date());
+  // console.log('new Date().toISOString(),', new Date().toISOString());
 
   if (!router.isFallback && !product?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -43,9 +46,7 @@ export default function Post({
             <>
               <article>
                 <Head>
-                  <title>
-                    {product.name} | Next.js Blog Example with {CMS_NAME}
-                  </title>
+                  <title>{product.name}</title>
                   <meta property="og:image" content={product.images[0]?.src} />
                 </Head>
                 <ProductCard product={product} products={products} />
@@ -81,6 +82,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // const allPosts = await getAllPostsWithSlug();
   const products: IProduct[] = await getProductsData();
   // const prodPath = products.map((product) => product.permalink);
+  // products.forEach((prod) => console.log(prod.slug));
 
   return {
     paths: products.map((product) => `/product/${product.slug}`) || [],

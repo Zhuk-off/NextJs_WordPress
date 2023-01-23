@@ -25,7 +25,11 @@ export default function Post({ post, posts, preview, dataRest }) {
   const router = useRouter();
   const morePosts = posts?.edges;
   const { data } = dataRest;
+  
+
   // console.log('post', post);
+  //   console.log('Date.parse', new Date(Date.parse( post.modified)).toISOString());
+
 
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -42,7 +46,7 @@ export default function Post({ post, posts, preview, dataRest }) {
               <article>
                 <Head>
                   <title>
-                    {post.title} | Next.js Blog Example with {CMS_NAME}
+                    {post.title}
                   </title>
                   <meta
                     property="og:image"
