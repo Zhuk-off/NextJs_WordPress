@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const slug = filterSlugPages('/' + node.slug);
     if (slug) {
       fields.push({
-        loc: process.env.NEXT_PUBLIC_SITE_URL + `/posts/${node.slug}` + '/',
+        loc: process.env.NEXT_PUBLIC_SITE_URL + `/${node.slug}` + '/',
         lastmod: new Date(Date.parse(node.modified)).toISOString(),
         changefreq: 'daily', //'weekly','yearly',
         priority: 0.7,

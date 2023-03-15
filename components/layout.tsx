@@ -35,6 +35,8 @@ export default function Layout({
     uri = page?.uri;
   }
 
+  // console.log(schema);
+
   return (
     <CartCountProvider>
       {/* важно стрнаницы что отдельные они без метатегов блог, товары, корзина, оформление */}

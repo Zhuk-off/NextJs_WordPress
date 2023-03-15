@@ -5,10 +5,11 @@ Allow: /
 # *
 User-agent: *
 Disallow: /checkout
+Disallow: /_next
 
 # Host
-Host: http://localhost:3000
+Host: https://zhu.by
 
 # Sitemaps
-Sitemap: http://localhost:3000/sitemap.xml
-Sitemap: http://localhost:3000/server-sitemap.xml
+Sitemap: https://zhu.by/sitemap.xml
+Sitemap: https://zhu.by/server-sitemap.xml

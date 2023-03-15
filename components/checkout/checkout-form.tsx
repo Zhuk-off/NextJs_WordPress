@@ -11,6 +11,7 @@ import {
   handleBillingDifferentThanShipping,
   handleCreateAccount,
   handleOtherPaymentMethodCheckout,
+  handleStripeCheckout,
   setStatesForCountry,
 } from '../../lib/checkoutHelpers';
 import validateAndSanitizeCheckoutForm from '../../utils/validator/checkout';
@@ -114,6 +115,14 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
 
     // For stripe payment mode, handle the strip payment
     if ('stripe' === input.paymentMethod) {
+      // const createdOrderData = await handleStripeCheckout(
+      //   input,
+      //   cart?.cartItems,
+      //   setRequestError,
+      //   setCart,
+      //   setIsOrderProcessing,
+      //   setCreatedOrderData
+      // );
       return null;
     }
 
@@ -133,7 +142,7 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     }
 
     setRequestError(null); //If he has reached this moment, then this means that there is no error
-    setOrderSend(true) // To display the message "Your order is accepted"
+    setOrderSend(true); // To display the message "Your order is accepted"
   };
 
   const handleOnChange = async (
@@ -141,7 +150,6 @@ const CheckoutForm = ({ countriesData }: { countriesData: ICountriesData }) => {
     isSipping: boolean = false,
     isBillingOrShipping: boolean = false
   ): Promise<void> => {
-    
     const { target } = event || {};
     if ('createAccount' === target.name) {
       handleCreateAccount(input, setInput, target);

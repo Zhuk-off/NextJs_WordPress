@@ -5,7 +5,7 @@ const SvgUser = (props) => (
     fill="none"
     viewBox="0 0 24 24"
     width={18}
-    height={40}
+    height="auto"
     stroke="currentColor"
     {...props}
   >

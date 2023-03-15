@@ -1,7 +1,6 @@
 import Container from './container';
 import { useContext, useEffect, useState } from 'react';
 import { HeaderFooterContext } from '../context/headerFooterContext';
-import { sanitize } from '../utils/miscellaneous';
 import Link from 'next/link';
 
 const footerNav = {
@@ -56,6 +55,7 @@ const footerNav = {
 // ];
 
 import { getIconComponentByName } from '../lib/helpers';
+import { isArray } from 'lodash';
 
 export default function Footer() {
   const { data } = useContext(HeaderFooterContext);
@@ -88,7 +88,7 @@ export default function Footer() {
               </p>
             </div>
 
-            {footerMenuItems.map(({ title, children }) => {
+            {isArray(footerMenuItems) && footerMenuItems.map(({ title, children }) => {
               return (
                 <div key={title}>
                   <h3 className="text-xl font-semibold text-gray-900">
