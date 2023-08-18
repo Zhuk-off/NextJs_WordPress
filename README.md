@@ -6,7 +6,6 @@ The project is an online store with a shopping cart and a blog. You can host the
 
 ### [https://zhu.by](https://zhu.by)
 
-
 ## Installation
 
 1. Clone the repository:
@@ -33,7 +32,7 @@ npm install
 
 First, you need a WordPress site. There are many solutions for WordPress hosting, such as [WP Engine](https://wpengine.com/) and [WordPress.com](https://wordpress.com/).
 
-You will need the following plugins to work properly. 
+You will need the following plugins to work properly.
 Install them in your WordPress.
 
 1. [WPGraphQL](https://ru.wordpress.org/plugins/wp-graphql/) - A plugin to access basic WordPress functionality via GraphQL
@@ -56,11 +55,10 @@ Install them in your WordPress.
 
 10. [WP GraphQL Polylang](https://github.com/valu-digital/wp-graphql-polylang) - Plugin to access Polylang plugin via GraphQL
 
-
 #### Customize client and server side
 
 Let's separate the client and server parts in WordPress so that there are no conflicts.
-The best option I can suggest is : 
+The best option I can suggest is :
 Save the client part as our website address (https://zhu.by).
 The server part will be saved as a subdomain (https://wordpress.zhu.by).
 
@@ -71,7 +69,6 @@ Option for deployment on the server:
 Option for local server:
 
 ![For local server](./docs/for-local-deployment.jpg)
-
 
 #### WPGraphQL
 
@@ -95,6 +92,7 @@ The [WPGraphQL](https://www.wpgraphql.com/) plugin also gives you access to a Gr
 ![WPGraphQL page](./docs/wp-graphiql.png)
 
 #### Headless CMS Plugin
+
 Allows us to create menus for header and footer.
 
 Create a menu for the header and footer of your site. To do this, go to the menu of your WordPress site Appearance -> Menus
@@ -102,7 +100,6 @@ Create a menu for the header and footer of your site. To do this, go to the menu
 Example of working with the plugin:
 
 ![Create menu](./docs/ceate-menu.png)
-
 
 ### Step 2. Populate Content
 
@@ -157,6 +154,7 @@ NEXT_PUBLIC_YM_ID=...
 # WORDPRESS_AUTH_REFRESH_TOKEN=
 # WORDPRESS_PREVIEW_SECRET=
 ```
+
 Get the keys 'WC_CONSUMER_KEY' and 'WC_CONSUMER_SECRET':
 
 ![Add Keys](./docs/add-key-1.jpg)
@@ -171,15 +169,14 @@ Add your keys to .env.local
 
 ```bash
 
-npm rundev
+npm run dev
 
 # or
 
-yarndev
+yarn dev
 ```
 
 Your blog should be up and running on [http://localhost:3000](http://localhost:3000)!
-
 
 ## Contacts
 
