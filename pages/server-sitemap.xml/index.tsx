@@ -1,6 +1,6 @@
 // pages/server-sitemap.xml/index.tsx
 
-import { getServerSideSitemap } from 'next-sitemap';
+import { getServerSideSitemapLegacy } from 'next-sitemap';
 import { GetServerSideProps } from 'next';
 import { getAllPagesSlug, getAllPostsWithSlug } from '../../lib/api';
 import { getProductsData } from '../../utils/products';
@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   });
 
-  return getServerSideSitemap(ctx, fields);
+  return getServerSideSitemapLegacy(ctx, fields);
 };
 
 // Default export to prevent next.js errors

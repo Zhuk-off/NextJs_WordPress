@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         userAgent: '*',
-        disallow: ['/checkout', '/_next'],
+        disallow: ['/checkout'],
       },
     ],
   },

@@ -5,7 +5,6 @@ Allow: /
 # *
 User-agent: *
 Disallow: /checkout
-Disallow: /_next
 
 # Host
 Host: https://zhu.by
